@@ -1,0 +1,61 @@
+/* Custom Table Component Styles */
+
+/* Table styling with full width, collapse borders, and top margin */
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  font-family: Arial, sans-serif;
+}
+
+/* Table header and cell styling with padding and border */
+.custom-table th, .custom-table td {
+  padding: 12px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+/* Table header background color */
+.custom-table th {
+  background-color: #f2f2f2;
+  color: #333;
+}
+
+/* Alternating row colors */
+.custom-table .even-row {
+  background-color: #f9f9f9;
+}
+
+.custom-table .odd-row {
+  background-color: #fff;
+}
+
+/* Hover effect for table rows */
+.custom-table tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* Button styles for actions */
+.custom-table .btn-yes, .custom-table .btn-no, .custom-table .btn-send {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  margin: 2px;
+  cursor: pointer;
+  border-radius: 3px;
+  font-size: 14px;
+}
+
+.custom-table .btn-no {
+  background-color: #dc3545;
+}
+
+.custom-table .btn-send {
+  background-color: #28a745;
+}
+
+/* Hover effects for buttons */
+.custom-table .btn-yes:hover, .custom-table .btn-no:hover, .custom-table .btn-send:hover {
+  opacity: 0.8;
+}

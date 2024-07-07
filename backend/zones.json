@@ -1,0 +1,688 @@
+[
+    {
+        "zone": "Calea Mosilor",
+        "pot": "80%",
+        "cut": "2,5",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 30 mp.",
+        "delimitare": "portiunea de strada dintre bulevardul Bratianu si bulevardul Carol si include str. Stelea Spatarul, str. Cavafii Vechi, str. Biserica Razvan, Intr. Pictor Vermont."
+    },
+    {
+        "zone": "Calea Grivitei",
+        "pot": "80%",
+        "cut": "2,5",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 30 mp.",
+        "delimitare": "portiunea de strada dintre Calea Victoriei si str. Atelierului ce include str. Atelierului si str. Semicercului"
+    },
+    {
+        "zone": "Calea Calarasilor",
+        "pot": "80%",
+        "cut": "2,5",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 30 mp",
+        "delimitare": "portiunea de strada dintre bd. Hristo Botev si str. Medeleni, ce include si strazile Poet Al. Sihleanu, Argetoaia, Intr. Pristolului si portiuni ale strazilor Dunarea Albastra, Oborului."
+    },
+    {
+        "zone": "Bratianu",
+        "pot": "85%",
+        "cut": "6",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 30 mp. Primele doua niveluri de deasupra cotei terenului (parter, mezanin/etajul I) pot ocupa întreaga suprafata a terenului. b. coeficient de utilizare al terenului (CUT): b. coeficient de uti",
+        "delimitare": "portiunea cuprinsa intre Piata Universitatii si Piata Unirii si include str. Slanic, str. Ion Nistor, str. Ion Ghica, str. Coltei, str. Mavrogheni, str. Patrascu Voda, str. Baniei, str. Jacques Elias, str. Baratiei, str. Patriei, str. Sf. Ion, str. Sepcari."
+    },
+    {
+        "zone": "Carol",
+        "pot": "65%",
+        "cut": "4",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 30 mp",
+        "delimitare": "Bulevard care uneste Piata Universitatii si Piata Iancului si include Piata Rosetti, str. Jean-Louis Calderon, str. Slanic, str. Dr. Radu Cristian, str. Lacul Gorgova, str. Caimatei, str. Armeneasca, Calea Mosilor, scuarul Pache Protopopescu, str. Traian, str. Olari, Intr. Serg. Levarda Ion, Intr. Serg, Costea Gh., str. Matasari, str. Agricultori, Intr. Serg. Iancu Ion, Intr. Serg. Pantiru Ion, Intr. Sold. Calota, Intr. Plut. Luicu V."
+    },
+    {
+        "zone": "Elisabeta Kogalniceanu",
+        "pot": "80%",
+        "cut": "4",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 30 mp",
+        "delimitare": "Bulevard care uneste Piata Universitatii si Piata Operei si include Piata Universitatii, Piata Mihail Kogalniceanu, str. I. Nistor, str. T. Caragiu, str. Eforiei, str. Domnita Anastasia, str. Lipscani, str. Brezoianu, str. Mihai Voda, str. Ing. Anghel Saligny, str. Ing. Elie Radu, str. Zalomit Ion, str. Gutemberg, str. Silfidelor, bd. Schitu Magureanu, Calea Plevnei, Intr. Vasile Paun, str. Gradina cu cai, str. Vasile Parvan, Splaiul Independentei."
+    },
+    {
+        "zone": "Ferdinand",
+        "pot": "65%",
+        "cut": "4",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 30 mp",
+        "delimitare": "Bulevard care uneste scuarul Pache Protopopescu si bulevardul Mihai Bravu si include strada Olari si Piata Foisorul de Foc."
+    },
+    {
+        "zone": "Hristo-Botev",
+        "pot": "65%",
+        "cut": "4",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 30 mp",
+        "delimitare": "Bulevard care uneste Piata Rosetti si Calea Calarasilor."
+    },
+    {
+        "zone": "Regina Maria",
+        "pot": "65%",
+        "cut": "3,2",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 30 mp",
+        "delimitare": "bulevard care uneste Piata Unirii si Calea Rahovei"
+    },
+    {
+        "zone": "Calea Dorobanti",
+        "pot": "65%",
+        "cut": "3,2",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 30 mp",
+        "delimitare": "Bulevard care uneste bulevardul Dacia si soseaua Stefan cel Mare si include Intr. Camil Petrescu, str. I. Maiorescu si portiuni ale strazilor N. Beloceanu, Stanislav Cihoski, Intr. Stanislav Cihoski."
+    },
+    {
+        "zone": "11 Iunie",
+        "pot": "65%",
+        "cut": "3,2",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 30 mp",
+        "delimitare": "Bulevard care uneste bulevardul Regina Maria si Parcul Carol."
+    },
+    {
+        "zone": "Lascar Catargiu",
+        "pot": "65%",
+        "cut": "3",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 30 mp",
+        "delimitare": "Bulevard care uneste Piata Romana si Piata Victoriei."
+    },
+    {
+        "zone": "Dacia",
+        "pot": "65%",
+        "cut": "3",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 30 mp",
+        "delimitare": "Bulevard care uneste Piata Romana cu Calea Mosilor."
+    },
+    {
+        "zone": "Aviatorilor",
+        "pot": "50%",
+        "cut": "2",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 50 mp",
+        "delimitare": "Bulevard care uneste Piata Victoriei cu Piata Aviatorilor si Soseaua Nordului."
+    },
+    {
+        "zone": "Kiseleff",
+        "pot": "65%",
+        "cut": "2",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 30 mp",
+        "delimitare": "Bulevard care uneste Piata Victoriei cu Piata Presei Libere."
+    },
+    {
+        "zone": "Calea Victoriei",
+        "pot": "N/A",
+        "cut": "N/A",
+        "obiectii": "Zona Piata Victoriei - bd. Dacia - maxim admis: 65%\nZona bd. Dacia - bd. Elisabeta - maxim admis: 80%\nZona bd. Elisabeta - Splaiul Independentei - maxim admis: 80%\nZona Piata Victoriei - bd. Dacia - maxim admis: 3\nZona bd. Dacia - bd. Elisabeta - maxim admis: 5\nZona bd. Elisabeta - Splaiul Independentei - maxim admis: 4.5",
+        "delimitare": "Portiunea de strada dintre Piata Victoriei si Splaiul Independentei si include Piata Revolutiei si Piata Palatului, strazile Luterana, Boteanu, Ministerului, Ing. Marconi, Dr. Raureanu si portiuni ale strazilor G-ral Berthelot, George Enescu, Ion Campineanu, Stirbei Voda, C-tin Exarhu, B. Frankl, C.A. Rosetti, Poiana Narciselor, Brezoianu, Aristide Demetriade, George Vraca, Matei Millo, Otetelesanu, Constantin Mille, Demetru I. Dobrescu, Academiei, Edgar Quinet, Beldiman Alex., Eforiei, Domnita Anastasia, Lipscani, Mihai Voda, Ilfov."
+    },
+    {
+        "zone": "C.A Rosetti - Popa Petre",
+        "pot": "65%",
+        "cut": "3,25",
+        "obiectii": "cu exceptia parcelelor din fronturile scuarurilor si la inflexiunea Rosetti - Popa Petre unde este admisa valoarea 4",
+        "delimitare": "Strada care uneste bd. Magheru si Calea Mosilor (segmentul nou) si include str. Scoalii si portiuni ale str. Logofat L. Stroici."
+    },
+    {
+        "zone": "Vasile Lascar",
+        "pot": "65%",
+        "cut": "3,25",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 30 mp",
+        "delimitare": "Portiunea de strada care uneste Piata Rosetti cu Piata Gemeni si include portiuni ale strazilor Sperantei, Dianei, Italiana, Otetari, I.L. Caragiale, Armand Calinescu."
+    },
+    {
+        "zone": "Traian",
+        "pot": "65%",
+        "cut": "2,5",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 30 mp",
+        "delimitare": "portiunea de strada care uneste str. Matei Basarab si bulevardul Carol"
+    },
+    {
+        "zone": "Batistei",
+        "pot": "65%",
+        "cut": "2,5",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 30 mp",
+        "delimitare": "Strada care uneste bd. Magheru si strada Vasile Lascar."
+    },
+    {
+        "zone": "Jean-Louis Calderon -Polona",
+        "pot": "65%",
+        "cut": "3,25",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 30 mp",
+        "delimitare": "Portiunea de strada care uneste bd. Carol si bd. Dacia si care include Casa Universitarilor, Gradina Icoanei, Piata Gh. Cantacuzino, Intr. Polona si portiuni ale strazilor Tudor Arghezi, Dianei, Dr. E. Bacaloglu, Pictor Arthur Verona, A.D. Xenopol."
+    },
+    {
+        "zone": "Mintuleasa",
+        "pot": "65%",
+        "cut": "2",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 30 mp",
+        "delimitare": "Strada care uneste bd. Carol si Calea Calarasilor si care include Intr. Mantuleasa."
+    },
+    {
+        "zone": "Stirbei Voda",
+        "pot": "65%",
+        "cut": "3,25",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 30 mp",
+        "delimitare": "Strada care uneste Piata Palatului si strada Berzei si care include Intr. Stirbei Voda si o portiune din str. Poiana Narciselor."
+    },
+    {
+        "zone": "Mihai Eminescu",
+        "pot": "80%",
+        "cut": "6",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 30 mp",
+        "delimitare": "Strada care uneste Calea Dorobanti si Calea Mosilor si care include str. Alex. Philippide, Luminei, si portiuni ale strazilor Aurel Vlaicu, Drobeta, Alecu Russo, Gh. Palade, Vasile Lascar, Toamnei, Monumentului, Suvenir."
+    },
+    {
+        "zone": "Marasesti",
+        "pot": "65%",
+        "cut": "3,25",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 30 mp",
+        "delimitare": "Bulevardul care uneste Parcul Carol si Splaiul Unirii si care include portiuni ale strazilor Timpului, Deceneu."
+    },
+    {
+        "zone": "Lipscani",
+        "pot": "80%",
+        "cut": "N/A",
+        "obiectii": "Pe strazile comerciale, cu loturi inguste, CUT maxim va fi de 2,5. Pe strazile flancate de institutii publice sau cu functiuni mixte, CUT poate atinge valoarea de 3,5. Pentru eventualele accente, CUT va rezulta din studii specifice.",
+        "delimitare": "Zona definita de str. Doamnei, bdul. I.C. Bratianu, Splaiul Independentei si Calea Victoriei si include strazile: Blanari, Lipscani, Bacani, Hanul cu Tei, Zarafi, Gabroveni, Peisajul Francez, Sepcari, Selari, Intr. Selari, Soarelui, Franceza (Iuliu Maniu)."
+    },
+    {
+        "zone": "Stavropoleos",
+        "pot": "80%",
+        "cut": "N/A",
+        "obiectii": "Pe strazile comerciale, cu loturi inguste, CUT maxim va fi de 2,5. Pe strazile flancate de institutii publice sau cu functiuni mixte, CUT poate atinge valoarea de 3,5. Pentru eventualele accente, CUT va rezulta din studii specifice.",
+        "delimitare": "Zona definita de Calea Victoriei, bd. Regina Elisabeta, str. Smardan, Splaiul Independentei si include strazile: Academiei, Doamnei, Eugeniu Carada, Lipscani, Stavropoleos, Sf. Dumitru, Pictor Nicolae Tontza, Filitti, Franceza (Iuliu Maniu)."
+    },
+    {
+        "zone": "Amzei",
+        "pot": "65%",
+        "cut": "2,5",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 50 mp",
+        "delimitare": "Zona definita de Calea Victoriei, bd. Dacia, bd. Magheru si Piata Palatului si include Piata Amzei si strazile G-ral Christian Tell, Biserica Amzei, Intr. Biserica Amzei, Piata Amzei, Mendeleev, George Enescu, Intr. Biserica Alba, Intr. Sibioara, Georges Clemenceau, Episcopiei, Nicolae Golescu, C-tin Exarhul."
+    },
+    {
+        "zone": "Nicolae Iorga",
+        "pot": "65%",
+        "cut": "2",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 50 mp",
+        "delimitare": "Zona definita de artere majore - Calea Victoriei - bd. Lascar Catargiu - bd. Dacia si include in aceste limite portiunile strazilor: Putul de Piatra, Orlando, G-ral Gheorghe Manu, Henri Coanda, Amiral Urseanu, Nicolae Iorga, Intr. Nicolae Iorga, Visarion."
+    },
+    {
+        "zone": "Coltei",
+        "pot": "60%",
+        "cut": "1,8",
+        "obiectii": "N/A",
+        "delimitare": "Zona definita de Calea Mosilor, bd. Hristo Botev, strada Slanic, str. Scaune, str. G-ral I. Florescu si include in aceste limite portiunile strazilor: Coltei, Dimitrie Bolintineanu, Lotusului."
+    },
+    {
+        "zone": "Caimatei",
+        "pot": "N/A",
+        "cut": "1,8",
+        "obiectii": "Maxim admis: \nInsulele cu locuinte izolate, cuplate sau in siruite, POT maxim va fi de 40, respectiv 50 sau 60%.",
+        "delimitare": "Zona definita de bd. Carol, bd. Hristo Botev si Calea Mosilor si include in aceste limite portiunile strazilor Caimatei, Dr. Radu Cristian, Sfintilor."
+    },
+    {
+        "zone": "Vasile Conta",
+        "pot": "65%",
+        "cut": "3",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 50 mp",
+        "delimitare": "Zona definita de artere majore - bd. Magheru - str. Batistei - str. Jean-Louis Calderon - str. C.A. Rosetti si include in aceste limite portiunile strazilor: Traian Vuia, Vasile Conta, Nicolae Filipescu, Tudor Arghezi, G-ral D. Praporgescu, Blanduziei."
+    },
+    {
+        "zone": "Thomas Masaryk",
+        "pot": "65%",
+        "cut": "2",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 50 mp",
+        "delimitare": "Zona definita de strazi de importanta medie - str. C.A Rosetti - str. Jean-Louis Calderon - str. Vasile Lascar si include in aceste limite portiunile strazilor: Thomas Masaryk, I.L. Caragiale, Intr. I.L. Caragiale, Sf. Spiridon, Aaron Florian."
+    },
+    {
+        "zone": "Pitar Mos",
+        "pot": "65%",
+        "cut": "N/A",
+        "obiectii": "Maxim admis: 2 (cu exceptia cladirilor din frontul Pietei Alex Lahovari - maximum 5 si a celor din scuarul Jules Michelet - maximum 4,5)",
+        "delimitare": "Zona definita de artere majore - bd. Magheru - bd. Dacia si de strazi de importanta medie - str. C.A Rosetti - str. A.D. Xenopol - str. Polona si include in aceste limite portiunile strazilor: George Enescu, Dionisie Lupu, Julles Michelet, Pitar Mos, Actor Arthur Verona, G-ral Erimia Grigorescu, Columb, Intr. Armaseului, Tache Ionescu si Piata Alex. Lahovari."
+    },
+    {
+        "zone": "Bibicescu",
+        "pot": "65%",
+        "cut": "2",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 50 mp",
+        "delimitare": "Zona definita de artere majore - bd. Mihai Kogalniceanu, Calea Plevnei si str. Vasile Parvan si include in aceste limite portiunile strazilor Th. Burada, Bibicescu."
+    },
+    {
+        "zone": "Negustori",
+        "pot": "N/A",
+        "cut": "1,8",
+        "obiectii": "Maxim admis: \nInsulele cu locuinte izolate, cuplate POT maxim va fi de 40, respectiv 50.",
+        "delimitare": "Zona definita de artere majore - bd. Hristo Botev, Calea Mosilor, str. Mantuleasa si Calea Calarasilor si include in aceste limite portiunile strazilor Pictor Stefan Luchian, Paleologu, Negustori, Cernica, Theodor Stefanescu, Culmea Veche, Calotesti, Zborului, Dunarea Albastra, C.F. Robescu."
+    },
+    {
+        "zone": "Sfintul Stefan",
+        "pot": "N/A",
+        "cut": "1,8",
+        "obiectii": "Maxim admis: \nInsulele cu locuinte izolate, cuplate POT maxim va fi de 40, respectiv 50.",
+        "delimitare": "Zona definita de artere majore - bd. Carol, str. Mantuleasa, Calea Calarasilor si str. Traian si include in aceste limite portiunile strazilor Lunii, Dimitrie Racovita, Sf. Stefan, Avram Iancu, Plantelor, Stefan Mihaileanu, C-tin Kirilescu, Popa Soare, Zefirului, Doctor Burghelea, Romulus, Pictor Giulio Romano, Intr. Dr. Bobeica."
+    },
+    {
+        "zone": "Labirint",
+        "pot": "N/A",
+        "cut": "1,8",
+        "obiectii": "Maxim admis: \nInsulele cu locuinte izolate, cuplate POT maxim va fi de 40, respectiv 50.",
+        "delimitare": "Zona definita de artere majore - Calea Calarasilor, bd. Mircea Voda, str. Parfumului, str. Matei Basarab, str. Labirint si include in aceste limite portiunile strazilor Columbelor, Prof. Ionescu Gh. Gion, Logofatul Udriste, Romulus, Matei Basarab, Preot Vasile Lucaciu, Intr. Preot Vasile Lucaciu, Pr. Z. Demarat, Anton Pann, Labirint, Prof. Ion Filibiliu, Parfumului, Vulturilor, Radu Ceausescu, Intr. Radu Ceausescu, Prof. Iuliu Valaori, Intr. Prof. Iuliu Valaori, Remus, Fetitelor, S-lt. Moga, Prof. Constantinescu, Hagiului, Medeleni."
+    },
+    {
+        "zone": "Armeneasca",
+        "pot": "N/A",
+        "cut": "1,8",
+        "obiectii": "Maxim admis: \nInsulele cu locuinte izolate, cuplate POT maxim va fi de 40, respectiv 50. Suprafata ramasa libera trebuie sa fie de cel putin 50 mp.",
+        "delimitare": "Zona definita de artere majore - bd. Carol, Calea Mosilor, str. Vasile Lascar, str. Maria Rosetti, str. Popa Petre si include in aceste limite portiunile strazilor Sperantei, Constantin Nacu, Sagetii, Italiana, Armand Calinescu, Arcului, Armeneasca, Popa Rusu, Inocentei, Pictor Rafael Sanzio, Spatarului, Intr. Spatarului, Licurg, Pasului, Intr. Domnesti, Calea Mosilor, Semilunei, Latina, Corbeanca, Cercului, Franzelarilor, Silvestru, Logofat Stroici, Donici, M. Serghiescu, Boca."
+    },
+    {
+        "zone": "Icoanei",
+        "pot": "N/A",
+        "cut": "1,8",
+        "obiectii": "Maxim admis: \nInsulele cu locuinte izolate, cuplate POT maxim va fi de 40, respectiv 50. Suprafata ramasa libera trebuie sa fie de cel putin 50 mp",
+        "delimitare": "Zona definita de artere majore - bd. Dacia, str. Vasile Lascar, str. Maria Rosetti, str. Jean-Louis Calderon si include in aceste limite portiunile strazilor Icoanei, Schitu Darvari, Aurel Vlaicu, C. Botez, Alex. Donici, Viitorului, I. Movila, Dumbrava Rosie, Piata Spaniei."
+    },
+    {
+        "zone": "Silvestru",
+        "pot": "N/A",
+        "cut": "1,8",
+        "obiectii": "Maxim admis: \nInsulele cu locuinte izolate, cuplate POT maxim va fi de 40, respectiv 50. Suprafata ramasa libera trebuie sa fie de cel putin 50 mp",
+        "delimitare": "Zona definita de artere majore - bd. Dacia, Calea Mosilor, str. Vasile Lascar, str. Maria Rosetti, str. Popa Petre, si include in aceste limite portiunile strazilor Viitorului, Logofat Stroici, D. Paciurea, Toamnei, Salcamilor, Silvestru, Venerei, Intr. Topolini, Oltarului, Intr. Cocora, Verii, Armoniei."
+    },
+    {
+        "zone": "Brezoianu",
+        "pot": "65%",
+        "cut": "3,5",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 50 mp",
+        "delimitare": "Zona definita de artere majore - bd. Stirbei Voda, bd. Mihai Kogalniceanu, str. Brezoianu si Parcul Cismigiu si include in aceste limite Piata W. Maracineanu, portiunile strazilor Sipotul Fantanilor, Poiana Narciselor, Dr. Marcovici Alex., Aristide Demetriad, George Vraca, Intr. Rigas, Matei Millo, Zalomit Ion, Constantin Mille, Otetelesanu I."
+    },
+    {
+        "zone": "Cobalcescu",
+        "pot": "N/A",
+        "cut": "2",
+        "obiectii": "Maxim admis: \nInsulele cu locuinte izolate, cuplate POT maxim va fi de 40, respectiv 50. Suprafata ramasa libera trebuie sa fie de cel putin 50 mp",
+        "delimitare": "Zona definita de artere majore - str. Berzei, Calea Plevnei, bd. Mihail Kogalniceanu, bd. Schitu Magureanu, bd. Stirbei Voda si include in aceste limite portiunile strazilor bd. Schitu Magureanu, Cobalcescu, Pictor C. Stahl, G-ral. C-tin Cristescu, Berzei, Intr. Ezereni, Oastasilor, Ion Slavici, Calea Plevnei, Sf. Constantin, Aurora, Intr. Aurora, Pompiliu E., Gh. Lazar."
+    },
+    {
+        "zone": "Temisana",
+        "pot": "65%",
+        "cut": "N/A",
+        "obiectii": "Maxim admis: 1,8 (2,5 in cazul cladirilor situate pe fronturile strazilor Mircea Vulcanescu si Popa Tatu)",
+        "delimitare": "Zona definita de artere majore: Calea Grivitei, Berzei, Stirbei Voda, Calea Victoriei si include in aceste limite portiunile strazilor Popa Tatu, Horatiu, Mircea Vulcanescu, Iulia Hasdeu, Intr. Iulia Hasdeu, Crisana, Transilvaniei, Temisana, Intr. Temisana, G-ral. Berthelot, Luigi Cazzavillan, Astronomilor, Putul cu Plopi, Spiru Haret, Intr. Sf. Sava, Theodor Aman, G-ral N. Dona, G-ral Budisteanu."
+    },
+    {
+        "zone": "Parcelarea Cotroceni",
+        "pot": "65%",
+        "cut": "1,8",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 30 mp",
+        "delimitare": "Zona delimitata de Piata Eroilor, str. Dr. Dumitru Bagdasar, sos. Panduri, ansamblul Cotroceni, sos. Cotroceni, str. Dr. Leonte A., str. Carol Davila, bd. Eroilor Sanitari, Piata Operei, str. Dr. Staicovici, Clubul Sportiv Progresul (National), Spitalul Panduri si include portiunile bd. Eroilor, strazilor Dr. Dumitru Bagdasar, G-ral Dr. A. Demosthen, Felicia Racovita, Ana Davila, Dr. Iuliu Teodori, Dr. Zaharia Petrescu, Prof. Dr. Gh. Manescu, Dr. Leonte A., Dr. Turnescu N., Dr. Radovici Ion, Carol Davila, Dr. St. Capa, Boicescu Alex., Dr. Gr. Taranu, Dr. Nanu Muscel, G-ral. Dr. Butoianu M., Dr. Clunet, Sfantul Elefterie, Dr. RK. Koch, Louis Pasteur, Intr. Pasteur, Doctor Lister, Dr. Mihail Obedenaru, Dr. Costache Negri, Intr. C. Negri, Dr. Staicovici, Dr. Teodorescu F., Dr. Iatropol, Dr. Ionescu Thoma, Dr. N. Manolescu, Dr. N. Vicol, Slt. Dr. M. Petrini, Dr. Grigore Romniceanu, Dr. D. Draghicescu, Dr. Herescu P., Prof. Dr. Victor Babes, Dr. Frederic Joliot Curie, Dr. Victor Poloni, Dr. M. Mirinescu, Dr. N. Tomescu, Dr. Eugen Iosif, Prof. Dr. Ogrecescu, Prof. Dr. Al. Vitzu, Cpt. Vijelie, Mihai Ciuca, Prof. Dr. Anibal Teohari, Dr. Constantin Severeanu, Prof. Dr. I. Atanasiu, Dr. I Ghiulamila."
+    },
+    {
+        "zone": "Parcelarea Vatra Luminoasa",
+        "pot": "40%",
+        "cut": "1,8",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 30 mp",
+        "delimitare": "Zona delimitata de sos. Iancului, str. Sarafinesti, str. Vatra Luminoasa, str. Tony Bulandra, str. Maior Coravu Ion, Lt. Victor Manu, Maior Ionescu Atanasie si include cvartalul Vatra Luminoasa si portiunile strazilor Corabeasca, Competitiei, Lt. Ionescu Anton, Lt. Robescu Radu, Lt. Lazarovici Virgil, Lt. Romulus Niculescu, Closani, Maior Dr. Laurentiu Claudian, Gh. Folescu, Gr. Gabrielescu, Jan Atanasiu, Bozioru, Tr. Grozavescu, N. Leonard, Aura Buzescu, Ion Paun Pincio, Calinului, Poet Neculuta T., Ruschita, Constantin Tanase, Dr. D. Marinescu, Grigore Vasiliu Birlic, Sighisoara, Otto I. Calin, Mateevici, Remetea, Sica Alexandrescu, Lupeni, Dr. Russel, Spartacus."
+    },
+    {
+        "zone": "Parcelarea Blanc",
+        "pot": "65%",
+        "cut": "1,8",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 30 mp",
+        "delimitare": "Zona delimitata de str. Paris, bd. Iancu de Hunedoara, sediul Guvernului si depoul de tramvaie si include portiunile strazilor Duiliu Zamfirescu, Arh. Louis Blanc, Argentina, Mexic."
+    },
+    {
+        "zone": "Parcelarea Filipescu",
+        "pot": "40%",
+        "cut": "1,8",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 30 mp",
+        "delimitare": "Zona delimitata de str. Rabat, str. Atena, aleea Alexandru si parcelele (proprietatile) exterioare acestor strazi, bd. Aviatorilor si include portiunile strazilor Tirana, Aleea Modrogan, Aleea Zoe si str. Venezuela."
+    },
+    {
+        "zone": "Parcelarea Bonaparte - Mora",
+        "pot": "40%",
+        "cut": "1,8",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 30 mp",
+        "delimitare": "Zona delimitata de str. Paris, str. Sofia, Cpt. Av. Gh. Demetriad, bd. Aviatorilor, Poet Andrei Muresanu, Piata Dorobanti, str. Roma, bd. Iancu de Hunedoara, depoul de tramvai, str. Mexic si include portiunile strazilor Tokio, Oslo, Berna, Londra, Roma, Intr. Roma, Washington, Praga, Belgrad, Varsovia, Haga, Ankara, Sofia, Cpt. Av. Gh. Demetriad, Ing. Ermil Pangrati."
+    },
+    {
+        "zone": "Parcelarea Tesatoria Mecanica",
+        "pot": "40%",
+        "cut": "1,8",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 30 mp",
+        "delimitare": "Zona delimitata de str. Londra, str. Washington, Braziliei si bd. Iancu de Hunedoara si include str. Finlanda."
+    },
+    {
+        "zone": "Parcelarea Edilitatea",
+        "pot": "40%",
+        "cut": "1,8",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 30 mp",
+        "delimitare": "Zona delimitata de str. Brazilia, bd. Iancu de Hunedoara, Calea Dorobanti si include portiunile strazilor Brazilia, Madrid, Stokholm."
+    },
+    {
+        "zone": "Parcelarea Societatea generala pentru construierea de locuinte ieftine",
+        "pot": "40%",
+        "cut": "1,8",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 30 mp",
+        "delimitare": "Zona delimitata de str. Roma, str. Washington, Calea Dorobanti si include portiunile strazilor Bruxelles, Lisabona, Braziliei, Washington."
+    },
+    {
+        "zone": "Parcelarea Mornand",
+        "pot": "40%",
+        "cut": "1,8",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 30 mp",
+        "delimitare": "Zona delimitata de bd. Aviatorilor, str. Muzeul Zambaccian, Calea Dorobanti si incinta TVR si include portiunile strazilor Dr. Grigore Mora, Ing. Ermil Pangrati, Ing. Gh. Bala, Col. Blarenberg, Ing. N. Costinescu, Eugen Lovinescu, Ing. Starostescu, Arh. Gr. Cerchez."
+    },
+    {
+        "zone": "Parcelarea Dorobanti 1",
+        "pot": "40%",
+        "cut": "1,8",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 30 mp",
+        "delimitare": "Zona delimitata de Calea Dorobanti, Lt. Aviator Radu Beller, Av. Popa Marin, Teheran si include portiunile strazilor Av. Gh. Moceanu, Av. Jean Texier, Av. Velescu N., slt. Stoianovici V., Av. Grigore Nicolae, sold. Moraru O., serg. Anghel Gh., G. Muzicescu, Simon Bolivar, Cpt. Av. Gheorghe Marasoiu, Lt. Av. Iuliu Tetrat, Lt. Av. Serban Petrescu."
+    },
+    {
+        "zone": "Parcelarea Dorobanti 2",
+        "pot": "40%",
+        "cut": "2,5",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 30 mp",
+        "delimitare": "Zona delimitata de sos. Aviatorilor, Calea Dorobanti, Teheran, str. Pictor Negulici, bd. Primaverii, str. Armindenului si include portiunile strazilor Herastrau, Pictor Iscovescu, Pictor D. Rosenthal, Amiral Balescu."
+    },
+    {
+        "zone": "Parcelarea UCB",
+        "pot": "25%",
+        "cut": "0,8",
+        "obiectii": "N/A",
+        "delimitare": "Zona delimitata de str. Herastrau, Armindeniului, Jean Monnet si de bd. M. Eliade si include portiunile strazilor Helesteului, Crangului."
+    },
+    {
+        "zone": "Parcelarea Monnet",
+        "pot": "40%",
+        "cut": "2,5",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 30 mp",
+        "delimitare": "Zona delimitata de str. Armindeniului, Jean Monnet, bd. M. Eliade, I.S. Turgheniev, Dante Alighieri, Helesteului, Pictor Negulici, Teheran, Av. Popa Marin, si include portiunile bd. Primaverii si strazilor L. N. Tolstoi, Maxim Gorki, Jean Monnet, Amiral Balescu, Contraamiral Negrescu, Victor Hugo, Moliere, A.P. Cehov, A.S. Puskin, N. Gogol, I.S. Turgheniev."
+    },
+    {
+        "zone": "Parcelarea Clucerului",
+        "pot": "40%",
+        "cut": "2,5",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 30 mp",
+        "delimitare": "Zona delimitata de sos. Kiseleff, str. Arh. Ion Mincu, str. Clucerului, str. Serdarului, str. Postelnicului, str. Alex Petoffi, str. Serg. Gh. Militaru si include portiunile strazilor Barbu St. Delavrancea, Serg. V. Dorobantu, Ady Endre, Prof. N. Ionescu, Intr. Eliza Zamfirescu."
+    },
+    {
+        "zone": "Parcelarea Jianu",
+        "pot": "40%",
+        "cut": "2,5",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 30 mp",
+        "delimitare": "Zona delimitata de str. Arh. Ion Mincu, str. Niceni, bd. Aviatorilor, str. Virgil Draghiceanu, str. Campia Turzii, str. Docentilor si include portiunile strazilor Arh. Stefan Burcus, Popa Savu."
+    },
+    {
+        "zone": "Parcelarea Docentilor",
+        "pot": "25%",
+        "cut": "1",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 50 mp",
+        "delimitare": "Zona delimitata de sos. Kiseleff, str. Arh. Ion Mincu, str. Niceni, str. Docentilor, Mr. Gh. Sontu, bd. Constantin Prezan si include portiunile strazilor Uruguay, Tuberozelor."
+    },
+    {
+        "zone": "Parcelarea Maior Coravu",
+        "pot": "40%",
+        "cut": "1,8",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 30 mp",
+        "delimitare": "Zona delimitata de sos. Mihai Bravu, str. Maior Coravu, str. Arh. D. Harjeu si bd. Basarabia si include portiunile strazilor Ing. N. Slaniceanu, Ing. Vasile Cristescu, Arh. Mandrea, Arh. Alex Zagoritz, Arh. Alex Savulescu, Arh. I. Socolescu, Arh. Gh. Sterian, Arh. D. Iorgulescu."
+    },
+    {
+        "zone": "Parcelarea Baicului",
+        "pot": "40%",
+        "cut": "1,8",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 30 mp",
+        "delimitare": "Zona delimitata de sos. Pantelimon, str. Baicului, str. Prof. Nifon Balasescu, bd. Ferdinand, str. Prof. Eufrosin Poteca si include portiunile strazilor Caminului, Spatarului N. Milescu, Prof. Eufrosin Poteca, Miresmelor, C-tin Georgian, Amiral Murgescu, Prof. Nifon Balasescu."
+    },
+    {
+        "zone": "Parcelarea Inter (filaret)",
+        "pot": "40%",
+        "cut": "1,8",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 30 mp",
+        "delimitare": "Zona delimitata de str. Constantin Istrati, str. Mitropolitul Nifon, str. Slobozia, str. Lamaiitei, str. Fabrica de Chibrituri si include Piata Garii Filaret si str. Xenofon, Intr. Caltuna, Aleea Negreni, str. Colonel Gh. Costescu."
+    },
+    {
+        "zone": "Parcelarea Mamulari",
+        "pot": "40%",
+        "cut": "1,8",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 30 mp",
+        "delimitare": "Zona delimitata de str. Mamulari si intr. Mamulari."
+    },
+    {
+        "zone": "Parcelarea Serban Voda",
+        "pot": "40%",
+        "cut": "1,8",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 30 mp",
+        "delimitare": "Zona delimitata de Calea Serban Voda, str. Nicopole, Parcul Tineretului, str. Soldat Ilie Serban, si include str. G-ral Gh. Lupu, G-ral N. Cerchez, Intr. Muguras."
+    },
+    {
+        "zone": "Parcelarea Invoirii",
+        "pot": "40%",
+        "cut": "1,8",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 30 mp",
+        "delimitare": "Zona delimitata de str. Fabrica de Chibrituri, soseaua Viilor si include str. Invoirii."
+    },
+    {
+        "zone": "Parcelarea Tacu",
+        "pot": "40%",
+        "cut": "1,8",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 30 mp",
+        "delimitare": "Zona delimitata de str. Fabrica de Chibrituri, str. C. Miculescu si include str. Ing. D. Tacu."
+    },
+    {
+        "zone": "Intrarea Viilor",
+        "pot": "40%",
+        "cut": "1,8",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 30 mp",
+        "delimitare": "zona ce include intr Viilor"
+    },
+    {
+        "zone": "Parcelarea Otelul Rosu",
+        "pot": "40%",
+        "cut": "1,8",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 30 mp",
+        "delimitare": "Zona delimitata de str. Ing. D. Teodoru si str. Silexului ce include str. Ing. D. Teodoru, str. Otelul Rosu, str. D. Murmuzescu, str. Daisoara, str. Roznov."
+    },
+    {
+        "zone": "Parcelarea Parcul Ioanid",
+        "pot": "60%",
+        "cut": "1,8",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 30 mp",
+        "delimitare": "Zona delimitata de bd. Dacia, str. C. Botez, str. Dumbrava Rosie, Piata Gh. Cantacuzino, str. Polona si include Parcul Ioanid."
+    },
+    {
+        "zone": "Parcelarea Cositelor",
+        "pot": "40%",
+        "cut": "1,8",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 30 mp",
+        "delimitare": "Zona delimitata de spatele frontului din Piata Alba Iulia, spatele frontului de pe Bd. Alba Iulia, str. Paunescu Paltin, str. Negoiului, str. Diligentei, str. Cercelus, str. Dristorului, spatele frontului de pe str. Lt. Botea Aurel, str. Caloian si include str. Chiparosului, str. Rodinei, str. Miletin, str. Cositelor, str. Leventicai, str. Cercelus, str. Harsova, str. Cogalnic, str. Dristorului, str. Diligentei."
+    },
+    {
+        "zone": "Parcelarea Averescu",
+        "pot": "40%",
+        "cut": "1,8",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 30 mp",
+        "delimitare": "Zona delimitata de str. Manastirea Casin, Piata Arcului de Triumf, sos. Kiseleff, str. Sergent Gh. Militaru, str. Alex. Petoffi, str. Clucerului, bd. Marasti si include bd. Maresal A. Averescu, Intr. Miciurin, str. Pictor G. A. Mirea."
+    },
+    {
+        "zone": "Parcelarea Domenii",
+        "pot": "40%",
+        "cut": "1,8",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 30 mp",
+        "delimitare": "Zona delimitata de bd. I. Mihalache, str. C. Sandu Aldea, bd. Marasti, str. Av. Maior St. Sanatescu si include str. Av. M. Zorileanu, Av. Maior P. Cretu, Alexandru Constantinescu, Lt. Av. Marasescu, Av. Lt. Gh. Stalpeanu, Av. Cpt. N. Drossu."
+    },
+    {
+        "zone": "Agronomie - Complex Sportiv Tineretului",
+        "pot": "25%",
+        "cut": "1",
+        "obiectii": "N/A",
+        "delimitare": "Zona ce cuprinde incintele Strandul Tineretului, Stadionul Tineretului, Institutul Agronomic Nicolae Balcescu, Academia de Stiinte Agricole si include bd. Marasti si str. Strandului."
+    },
+    {
+        "zone": "Strehaia",
+        "pot": "65%",
+        "cut": "2",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 30 mp",
+        "delimitare": "Zona situata intre Calea Calarasilor, str. Sf. Vineri, bd. Unirii, str. Mircea Voda ce cuprinde str. Clucerul Udricani, str. Maria Clucereasa, str. Olteni, str. Dr. Iuliu Baraschi, str. Strehaia."
+    },
+    {
+        "zone": "Biserica Mihai Voda - Sapientei",
+        "pot": "65%",
+        "cut": "2",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 30 mp",
+        "delimitare": "Zona ce cuprinde spatele fronturilor de pe Splaiul Independentei, Bd. Natiunile Unite si include str. Sapientei, str. Vigilentiei, str. Brutus si str. Politiei."
+    },
+    {
+        "zone": "Academia Militara",
+        "pot": "N/A",
+        "cut": "N/A",
+        "obiectii": "In cazul unor interventii noi, POT/CUT urmeaza sa fie stabilit pe baza de concurs public de urbanism",
+        "delimitare": "zonă delimitată de sos. Panduri, Parcul Palatului Cotroceni, str. G-ral medic A. Demosthen, str. Dr. Carol Davila, str. Dr. Francisc Rainer, str. Cpt. Al. Vitzu, str. Cpt. A. Vijelie și include ansamblul Academia Militară, azilul Elena Doamna, Piața Eroilor, bd. Eroilor, str. Dr. Francisc Rainer, str. Prof. Dr. D. Bagdasar"
+    },
+    {
+        "zone": "Palatul Cotroceni",
+        "pot": "N/A",
+        "cut": "N/A",
+        "obiectii": "In cazul unor interventii noi, POT/CUT urmeaza sa fie stabilit pe baza de concurs public de urbanism.",
+        "delimitare": "zonă delimitată de sos. Panduri, sos. Cotroceni, str. Ana Davila, bd. Prof. Dr. Gh. Marinescu și include parcul și palatul Cotroceni."
+    },
+    {
+        "zone": "Dealul Mitropoliei",
+        "pot": "65%",
+        "cut": "2,5",
+        "obiectii": "pentru restul zonei POT urmeaza sa fie stabilit pe baza de concurs public de urbanism",
+        "delimitare": "zona delimitată de Bd. Regina Maria, str. Bibescu Voda, str. Ienachita Vacarescu, str. Principatele Unite, str. 11 Iunie și include Parcul și Ansamblul Patriarhiei, str. Patriarhiei, Intr. Patriarhiei, Aleea Dealul Mitropoliei."
+    },
+    {
+        "zone": "Radu Voda",
+        "pot": "N/A",
+        "cut": "N/A",
+        "obiectii": "In cazul unor interventii noi, POT/CUT urmeaza sa fie stabilit pe baza de concurs public de urbanism.",
+        "delimitare": "zona delimitată de str. Radu Voda, spatele fronturilor de pe bd. Mareseti și de pe Intr. Mihnea Voda și include ansamblul Mănăstirii Radu Voda"
+    },
+    {
+        "zone": "Parcul Cismigiu",
+        "pot": "N/A",
+        "cut": "N/A",
+        "obiectii": "se mentine situatia existenta POT/CUT",
+        "delimitare": "zonă delimitată de bd. Schitu Magureanu, str. Stirbei Voda, str. Sipotul Fantanilor, Piata Cpt. W. Marcineanu, str. Brezoianu, bd. Mihai Kogalniceanu și conține Parcul Cișmigiu."
+    },
+    {
+        "zone": "Parcul Carol",
+        "pot": "N/A",
+        "cut": "N/A",
+        "obiectii": "se mentine situatia existenta POT/CUT",
+        "delimitare": "zona delimitată de str. Dr. C-tin Istrati, str. G-ral Candiano Popescu, Calea Serban Vodă, str. Cuțitul de Argint și conține Parcul Carol."
+    },
+    {
+        "zone": "Parcul Herastrau",
+        "pot": "N/A",
+        "cut": "N/A",
+        "obiectii": "se mentine situatia existenta \nPOT/CUT",
+        "delimitare": "zona delimitată de bd. C-tin Prezan, sos. Kiseleff, sos. Bucuresti - Ploiesti, str. Menuetului, str. Tipografilor, Aleea Mateloșilor, șoseaua Nordului, bd. Aviatorilor și include Parcul Herastrau, Lacul Herastrau, Muzeul Satului, ansamblul Garii Baneasa, ansamblul Minovici, str. Dr. Minovici Nic., str. Menuetului."
+    },
+    {
+        "zone": "Parcul DelaVrancra",
+        "pot": "N/A",
+        "cut": "N/A",
+        "obiectii": "se mentine situatia existenta",
+        "delimitare": "zonă delimitată de bd. I. Mihalache, Piata Victoriei, bd. Aviatorilor, str. Arh. Ion Mincu, str. Barbu Șt. Delavrancea și include Parcul Delavrancea, sos. Kiseleff, str. Monetăriei, Intr. Nopții."
+    },
+    {
+        "zone": "Gradina Botanica",
+        "pot": "N/A",
+        "cut": "N/A",
+        "obiectii": "se mentine situatia existenta",
+        "delimitare": "zona delimitată de Splaiul Independenței, str. Dr. Dimitrie Brândză, sos. Cotroceni, sos. Grozăvești și include Grădina Botanică, Intr. Portocalelor, Facultatea de Științe Naturale."
+    },
+    {
+        "zone": "Antim",
+        "pot": "50%",
+        "cut": "1,5",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 50 mp",
+        "delimitare": "zona definită de artere majore: bdul. Unirii, bdul. Regina Maria și bdul. Libertății și include în aceste limite porțiunile străzilor: George Georgescu, Mitropolit Antim Ivireanul, Poiana Florilor, Intr. Poiana Florilor, Gladiolelor, Justiției, 11 Iunie, C-tin Silvestri, Intr. Eliza Moroiu."
+    },
+    {
+        "zone": "Principatele Unite",
+        "pot": "50%",
+        "cut": "1,8",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 50 mp",
+        "delimitare": "zona delimitată de str. Principatele Unite, str. Ienachita Văcărescu, str. Bibescu Vodă, str. Cuza Vodă, bd. Dimitrie Cantemir, Calea Șerban Vodă, bd. Măgurele, str. 11 Iunie și include str. Cpt. Preotescu Gh., Intr. Cpt. Preotescu Gh., str. Ipotești, str. Titus, str. Olimpului, str. Muzelor, str. Principatele Unite, str. Ienachita Văcărescu, str. Sfânta Ecaterina, str. I. Budai Deleanu, str. Concordiei, Piața Concordiei, str. Petre Cercel, str. Deceneu, str. Cornelia, Intr. Drăgușani."
+    },
+    {
+        "zone": "Parcelarea Gramont",
+        "pot": "40%",
+        "cut": "1,8",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 30 mp",
+        "delimitare": "zona delimitată de bd. G. Coșbuc, str. Poiana Florilor, str. 11 Iunie, str. Mitropolitul Nifon, str. Slobozia, str. Lămâia, str. Fabrica de Chibrituri, str. Mitropolitul Filaret, str. Gazelei și include str. Albă, str. Liveni, str. C. Bozianu, str. Mitropolitul Nifon, str. Gramont, str. Episcopul Chesarie, str. Chindiei, str. Cpt. Mircea Vasilescu, str. Principatele Unite, str. Justiției, str. Mitropolitul Filaret, str. Slobozia, Intr. Slobozia, str. Prof. Gh. Murgoci."
+    },
+    {
+        "zone": "Crisului",
+        "pot": "50%",
+        "cut": "1,8",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 50 mp",
+        "delimitare": "zona delimitată de str. Radu Vodă, ansamblul Radu Vodă, str. Crișului, str. Oiielor, bd. Măgurele și include Intr. Mihnea Vodă."
+    },
+    {
+        "zone": "Bucur",
+        "pot": "65%",
+        "cut": "2,5",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 50 mp",
+        "delimitare": "zona delimitată de spatele fronturilor din Piața Unirii și de pe bd. Unirii și bd. Națiunile Unite, Splaiul Independenței și include str. Victoriței, str. Apolodor, str. Dr. Paul Orleanu, str. Sfinții Apostoli, str. Operetei, str. Poenaru Bordea, str. Danielopol, str. Palatului Justiției."
+    },
+    {
+        "zone": "Facultatea de Medicina",
+        "pot": "N/A",
+        "cut": "N/A",
+        "obiectii": "se mentine situatia existenta POT/CUT",
+        "delimitare": "zona delimitată de Splaiul Independenței, bd. Eroilor Sanitari, str. Carol Davila, str. Dr. Leonte A., str. Dr. Buicliu C. și include incinta Facultății de Medicină, clădirea Spitalului Clinic al Municipiului București și parcul înconjurător, bd. Eroilor."
+    },
+    {
+        "zone": "Plumbuita",
+        "pot": "N/A",
+        "cut": "N/A",
+        "obiectii": "se mentine situatia existenta \nPOT/CUT",
+        "delimitare": "o primă subzonă delimitată de Lacul Plumbuita, str. Doamna Ghica, sos. Colentina, str. Plumbuita, str. Ricinului ce include Parcul Plumbuita, Ansamblul și Parcul Doamna Ghica.\no a doua subzonă delimitată de str. Plumbuita, sos. Colentina, Lacul Plumbuita ce include Mănăstirea Plumbuita și parcul aferent."
+    },
+    {
+        "zone": "Parcelarea Uruguay",
+        "pot": "N/A",
+        "cut": "1,8",
+        "obiectii": "maxim admis: in insulele cu locuinte izolate, cuplate POT maxim va fi de 40, respectiv 50",
+        "delimitare": "zonă delimitată de sos. Aviatorilor, bd. C-tin Prezan, str. Mr. Gh. Șonțu, str. Alexandrina, str. Câmpia Turzii, str. Virgil Drăghiceanu și include str. Uruguay, str. Alexandrina, str. Câmpia Turzii, str. Popa Savu, str. Prof. I. Cantacuzino"
+    },
+    {
+        "zone": "Cadearea Bastiliei",
+        "pot": "50%",
+        "cut": "2",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 50 mp.",
+        "delimitare": "zona delimitată de spatele fronturilor de pe bd. Lascar Catargiu, bd. Iancu de Hunedoara, Calea Dorobantilor și include str. Grigore Alexandrescu, str. Ciprian Porumbescu, str. Cantemir Voda, str. Căderea Bastiliei, Intr. Grigore Alexandrescu, Intr. Fabulistului, Intr. Căderea Bastiliei, str. Vasile Alecsandri, str. General C. Coandă, Intr. Blaj, str. Povernei, str. Clopotarii Vechi, str. Viisoarei, str. Constantin Daniel, str. Visarion, Intr. Orizontului, Intr. Anasonului, str. I. Slatineanu, str. Crăciun, Intr. Crăciun, str. Cantilli."
+    },
+    {
+        "zone": "Polona",
+        "pot": "50%",
+        "cut": "2",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 50 mp.",
+        "delimitare": "zona delimitată de spatele fronturilor de pe bd. Iancu de Hunedoara, Calea Dorobanților, str. Mihai Eminescu, str. Tunari și include str. Ștefan Greceanu, str. Paul Greceanu, str. Aurel Vlaicu, str. Fecioarei, str. Erou Calinion, Intr. Erou Calinion, str. Justinian, Intr. Bravurii, Intr. Slatinița, Intr. Buciumeni, str. Prof. David Emanuel, Prof. Ion Bogdan, Intr. Jijia, Intr. Bocănița, str. Slăvești, str. General Ernest Broșteanu, str. Ing. Emil Balaban, str. Caragea Vodă."
+    },
+    {
+        "zone": "Haralambie",
+        "pot": "40%",
+        "cut": "1,8",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 30 mp.",
+        "delimitare": "zonă delimitată de Calea Șerban Vodă, str. General Candiano Popescu, str. General Haralambie și include str. Soldat Simion Ștefan, str. General Haralambie."
+    },
+    {
+        "zone": "Occidentului",
+        "pot": "50%",
+        "cut": "2",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 50 mp",
+        "delimitare": "zonă delimitată de str. Sevastopol, spatele fronturilor de pe str. Buzesti, Calea Griviței, Calea Victoriei și include str. Sfinții Voievozi, str. Ec. Teodoroiu, str. Occidentului, Intr. Sevastopol, str. Frumoasă, Intr. Frumoasă, Intr. Augustin, Intr. Lt. D-tru Lemnea, str. General Gh. Manu, str. Mihail Moxa."
+    },
+    {
+        "zone": "Horei",
+        "pot": "50%",
+        "cut": "2",
+        "obiectii": "Suprafata ramasa libera trebuie sa fie de cel putin 50 mp",
+        "delimitare": "zonă delimitată de spatele fronturilor de pe bd. Carol, bd. Ferdinand și Calea Moșilor și include str. Iancu Cavaler de Flondor, str. Vasile Stroescu, str. Cpt. I. Vasilescu, str. Horei, str. Lirei, str. Pictor Andreescu, str. Fluerului, str. Mătăsari."
+    }
+]

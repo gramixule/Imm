@@ -1,0 +1,167 @@
+/* Employee Page Styles */
+
+.employee-page {
+  display: flex;
+  flex-direction: column;
+}
+
+.details-section {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.details-left {
+  flex: 1;
+  padding: 10px;
+}
+
+.details-upper,
+.details-lower {
+  background-color: #f9f9f9; /* Light grey background */
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.details-upper h3,
+.details-lower h3 {
+  margin-bottom: 10px;
+  font-size: 18px;
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 5px;
+}
+
+.details-upper p,
+.details-lower p {
+  margin: 5px 0;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.details-right {
+  flex: 1;
+  background-color: #f9f9f9; /* Light grey background */
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.details-right h3 {
+  margin-bottom: 10px;
+  font-size: 18px;
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 5px;
+}
+
+.details-right p {
+  margin: 5px 0;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* Form Styles */
+
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+form label {
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+form input,
+form textarea {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+form button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+form button:hover {
+  background-color: #0056b3;
+}
+
+.contact-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.details-right .btn-whatsapp,
+.details-right .btn-call,
+.details-right .btn-mail {
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-align: center;
+  cursor: pointer;
+  border: none;
+  color: white;
+  font-size: 16px;
+}
+
+.details-right .btn-whatsapp {
+  background-color: #25D366; /* WhatsApp green */
+}
+
+.details-right .btn-whatsapp:hover {
+  background-color: #1EBE57;
+}
+
+.details-right .btn-call {
+  background-color: #34B7F1; /* Call blue */
+}
+
+.details-right .btn-call:hover {
+  background-color: #2C9FD6;
+}
+
+.details-right .btn-mail {
+  background-color: #007BFF; /* Mail blue */
+}
+
+.details-right .btn-mail:hover {
+  background-color: #0056B3;
+}
+
+.section-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.section-buttons button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.section-buttons button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.section-buttons button:hover:enabled {
+  background-color: #0056b3;
+}
