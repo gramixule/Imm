@@ -1,6 +1,6 @@
 import json
 import os
-from flask import Flask, request, jsonify, session, send_from_directory
+from flask import Flask, request, jsonify, session, send_from_directory, abort
 from flask_cors import CORS
 from flask_session import Session
 import logging
@@ -10,7 +10,11 @@ import re
 import difflib
 from werkzeug.security import generate_password_hash, check_password_hash
 
-app = Flask(__name__, static_folder='../frontend/build', static_url_path='/')
+# Log the static folder path
+static_folder_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../frontend/build'))
+print(f"Static folder path: {static_folder_path}")
+
+app = Flask(__name__, static_folder=static_folder_path, static_url_path='/')
 CORS(app, supports_credentials=True, origins=["http://localhost:3000"])
 app.secret_key = os.environ.get('SECRET_KEY', 'supersecretkey')  # For session management
 
@@ -46,16 +50,17 @@ validation_data = []
 admin_data = []
 additional_details = {}
 
-
 @app.before_request
 def log_session_info():
     app.logger.info(f"Session info: {dict(session)}")
 
-
 @app.route('/')
 def serve():
-    return send_from_directory(app.static_folder, 'index.html')
-
+    try:
+        return send_from_directory(app.static_folder, 'index.html')
+    except Exception as e:
+        app.logger.error(f"Error serving static file: {e}")
+        abort(404)
 
 @app.route('/api/login', methods=['POST'])
 def login():
@@ -71,14 +76,12 @@ def login():
         app.logger.warning(f"Invalid login attempt for user '{username}'")
         return jsonify({"message": "Invalid credentials"}), 401
 
-
 @app.route('/api/logout', methods=['POST'])
 def logout():
     session.pop('user', None)
     session.pop('role', None)
     app.logger.info("User logged out")
     return jsonify({"message": "Logout successful"}), 200
-
 
 @app.route('/api/data', methods=['POST'])
 def get_data():
@@ -94,7 +97,6 @@ def get_data():
         response = {'data': data.get('data')}
     return jsonify(response)
 
-
 def extract_numbers_before_mp(text):
     try:
         text = str(text)
@@ -106,7 +108,6 @@ def extract_numbers_before_mp(text):
     except Exception as e:
         app.logger.error(f"Error occurred while extracting numbers before 'mp': {e}")
         return None
-
 
 @app.route('/api/convert', methods=['GET'])
 def convert_xlsx_to_json():
@@ -149,7 +150,6 @@ def convert_xlsx_to_json():
         app.logger.error('Error processing the XLSX file', exc_info=True)
         return jsonify({'error': str(e)}), 500
 
-
 @app.route('/api/delete_row', methods=['POST'])
 def delete_row():
     if 'user' not in session:
@@ -180,7 +180,6 @@ def delete_row():
         app.logger.error('Error deleting row from the XLSX file', exc_info=True)
         return jsonify({'error': str(e)}), 500
 
-
 @app.route('/api/send_to_employee', methods=['POST'])
 def send_to_employee():
     if 'user' not in session or session.get('role') != 'admin':
@@ -200,7 +199,6 @@ def send_to_employee():
 
     return jsonify({'status': 'success'})
 
-
 @app.route('/api/send_to_validation', methods=['POST'])
 def send_to_validation():
     if 'user' not in session or session.get('role') != 'employee':
@@ -215,7 +213,6 @@ def send_to_validation():
     validation_data.append(data)  # Add to validation_data
 
     return jsonify({'status': 'success'})
-
 
 @app.route('/api/save_details', methods=['POST'])
 def save_details():
@@ -240,7 +237,6 @@ def save_details():
     app.logger.info(f"Additional details saved: {additional_details[data['ID']]}")
     return jsonify({'status': 'success'})
 
-
 @app.route('/api/get_additional_details', methods=['GET'])
 def get_additional_details():
     if 'user' not in session:
@@ -250,7 +246,6 @@ def get_additional_details():
     details = additional_details.get(int(row_id), {})
     app.logger.info(f"Fetched additional details for ID {row_id}: {details}")
     return jsonify(details)
-
 
 @app.route('/api/delete_validation_row', methods=['POST'])
 def delete_validation_row():
@@ -266,14 +261,12 @@ def delete_validation_row():
 
     return jsonify({'status': 'success'})
 
-
 @app.route('/api/admin_data', methods=['GET'])
 def get_admin_data():
     if 'user' not in session or session.get('role') != 'admin':
         app.logger.warning("Unauthorized access attempt")
         return jsonify({'message': 'Unauthorized'}), 401
     return jsonify(admin_data)
-
 
 @app.route('/api/employee_data', methods=['GET'])
 def get_employee_data():
@@ -282,14 +275,12 @@ def get_employee_data():
         return jsonify({'message': 'Unauthorized'}), 401
     return jsonify(employee_data)
 
-
 @app.route('/api/validation_data', methods=['GET'])
 def get_validation_data():
     if 'user' not in session or session.get('role') not in ['employee', 'admin']:
         app.logger.warning("Unauthorized access attempt")
         return jsonify({'message': 'Unauthorized'}), 401
     return jsonify(validation_data)
-
 
 @app.route('/api/get_zone_info', methods=['POST'])
 def get_zone_info():
@@ -316,11 +307,9 @@ def get_zone_info():
     else:
         return jsonify({'message': 'Zone not found'}), 404
 
-
 def markAsNew(data):
     data['isNew'] = True
     return data
-
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5000)
