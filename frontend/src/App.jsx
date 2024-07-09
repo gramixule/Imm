@@ -23,7 +23,7 @@ const App = () => {
   };
 
   const fetchData = () => {
-    axios.get('${API_URL}/api/convert', { withCredentials: true })
+    axios.get(`${API_URL}/api/convert`, { withCredentials: true })
       .then(response => {
         console.log("Data fetched:", response.data);
         if (Array.isArray(response.data)) {
@@ -53,7 +53,7 @@ const App = () => {
             <button
               className="button"
               onClick={() => {
-                axios.post('${API_URL}/api/logout', {}, { withCredentials: true })
+                axios.post(`${API_URL}/api/logout`, {}, { withCredentials: true })
                   .then(() => {
                     setRole(null);
                     setRowData([]);
