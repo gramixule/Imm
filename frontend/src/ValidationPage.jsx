@@ -4,6 +4,8 @@ import CustomTableComponent from './CustomTableComponent';
 import Modal from './Modal';
 import './ValidationPage.css';
 
+const API_URL = 'https://imm-a8ub.onrender.com';
+
 const ValidationPage = () => {
   const [data, setData] = useState([]);
   const [selectedRow, setSelectedRow] = useState(null);
@@ -29,7 +31,7 @@ const ValidationPage = () => {
   }, [selectedRow]);
 
   const fetchValidationData = () => {
-    axios.get('http://localhost:5000/api/validation_data', { withCredentials: true })
+    axios.get('${API_URL}/api/validation_data', { withCredentials: true })
       .then(response => {
         console.log("Validation data fetched:", response.data);
         setData(response.data);
@@ -40,7 +42,7 @@ const ValidationPage = () => {
   };
 
   const fetchZoneInfo = (zone) => {
-    axios.post('http://localhost:5000/api/get_zone_info', { zone }, { withCredentials: true })
+    axios.post('${API_URL}/api/get_zone_info', { zone }, { withCredentials: true })
       .then(response => {
         console.log("Zone info fetched:", response.data);
         setZoneInfo(response.data);  // Update state with fetched zone information
@@ -59,7 +61,7 @@ const ValidationPage = () => {
   };
 
   const handleDelete = (id) => {
-    axios.post('http://localhost:5000/api/delete_validation_row', { id }, { withCredentials: true })
+    axios.post('${API_URL}/api/delete_validation_row', { id }, { withCredentials: true })
       .then(response => {
         if (response.data.status === 'success') {
           setData(data.filter(row => row.ID !== id));
@@ -93,7 +95,7 @@ const ValidationPage = () => {
       questions: selectedRow.questions // Use the existing questions
     };
 
-    axios.post('http://localhost:5000/api/send_to_employee', updatedRow, { withCredentials: true })
+    axios.post('${API_URL}/api/send_to_employee', updatedRow, { withCredentials: true })
       .then(response => {
         if (response.data.status === 'success') {
           setData(data.filter(r => r.ID !== updatedRow.ID));
