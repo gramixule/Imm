@@ -7,6 +7,8 @@ import LoginForm from "./LoginForm";
 import ValidationPage from "./ValidationPage";
 import "./App.css"; // Ensure you have the necessary styles
 
+const API_URL = 'https://imm-a8ub.onrender.com';
+
 const App = () => {
   const [role, setRole] = useState(null);
   const [rowData, setRowData] = useState([]);
@@ -21,7 +23,7 @@ const App = () => {
   };
 
   const fetchData = () => {
-    axios.get('http://localhost:5000/api/convert', { withCredentials: true })
+    axios.get('${API_URL}/api/convert', { withCredentials: true })
       .then(response => {
         console.log("Data fetched:", response.data);
         if (Array.isArray(response.data)) {
@@ -51,7 +53,7 @@ const App = () => {
             <button
               className="button"
               onClick={() => {
-                axios.post('http://localhost:5000/api/logout', {}, { withCredentials: true })
+                axios.post('${API_URL}/api/logout', {}, { withCredentials: true })
                   .then(() => {
                     setRole(null);
                     setRowData([]);
