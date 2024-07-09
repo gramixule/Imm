@@ -4,6 +4,9 @@ import CustomTableComponent from './CustomTableComponent';
 import Modal from './Modal';
 import './AdminPage.css';
 
+// Define the backend URL from Render
+const API_URL = 'https://imm-a8ub.onrender.com';
+
 const AdminPage = ({ rowData }) => {
   const [data, setData] = useState(rowData);
   const [selectedRow, setSelectedRow] = useState(null);
@@ -44,7 +47,7 @@ const AdminPage = ({ rowData }) => {
   }, [rowData]);
 
   const fetchAdminData = () => {
-    axios.get('http://localhost:5000/api/admin_data', { withCredentials: true })
+    axios.get(`${API_URL}/api/admin_data`, { withCredentials: true })
       .then(response => {
         const dataWithPricePerSquareMeter = response.data.map(item => ({
           ...item,
@@ -62,7 +65,7 @@ const AdminPage = ({ rowData }) => {
   };
 
   const handleDelete = (id) => {
-    axios.post('http://localhost:5000/api/delete_row', { id }, { withCredentials: true })
+    axios.post(`${API_URL}/api/delete_row`, { id }, { withCredentials: true })
       .then(() => {
         setData(data.filter(row => row.ID !== id));
       })
@@ -84,7 +87,7 @@ const AdminPage = ({ rowData }) => {
       questions: customQuestions.filter(q => q.checked)
     };
 
-    axios.post('http://localhost:5000/api/send_to_employee', updatedRow, { withCredentials: true })
+    axios.post(`${API_URL}/api/send_to_employee`, updatedRow, { withCredentials: true })
       .then(response => {
         if (response.data.status === 'success') {
           setData(data.filter(r => r.ID !== updatedRow.ID));
