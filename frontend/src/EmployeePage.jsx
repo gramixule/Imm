@@ -19,7 +19,7 @@ const EmployeePage = () => {
   }, []);
 
   const fetchEmployeeData = () => {
-    axios.get('${API_URL}/api/employee_data', { withCredentials: true })
+    axios.get(`${API_URL}/api/employee_data`, { withCredentials: true })
       .then(response => {
         console.log("Employee data fetched:", response.data);
         setRowData(response.data);
@@ -45,7 +45,7 @@ const EmployeePage = () => {
       questions: selectedRow.questions.map(q => ({ ...q, answer: q.answer || '' }))
     };
 
-    axios.post('${API_URL}/api/send_to_validation', updatedRow, { withCredentials: true })
+    axios.post(`${API_URL}/api/send_to_validation`, updatedRow, { withCredentials: true })
       .then(response => {
         if (response.data.status === 'success') {
           fetchEmployeeData();
