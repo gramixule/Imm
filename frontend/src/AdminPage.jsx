@@ -4,16 +4,10 @@ import CustomTableComponent from './CustomTableComponent';
 import Modal from './Modal';
 import './AdminPage.css';
 
-<<<<<<< HEAD
 // Define the backend URL from Render
 const API_URL = 'https://imm-a8ub.onrender.com';
 
-const AdminPage = ({ rowData }) => {
-=======
-const API_URL = 'https://imm-a8ub.onrender.com';
-
 const AdminPage = ({ rowData = [] }) => {
->>>>>>> ad04e2cf (Version 0.2)
   const [data, setData] = useState(rowData);
   const [selectedRow, setSelectedRow] = useState(null);
   const [showModal, setShowModal] = useState(false);
@@ -74,11 +68,7 @@ const AdminPage = ({ rowData = [] }) => {
   };
 
   const handleDelete = (id) => {
-<<<<<<< HEAD
     axios.post(`${API_URL}/api/delete_row`, { id }, { withCredentials: true })
-=======
-    axios.post('{API_URL}/api/delete_row', { id }, { withCredentials: true })
->>>>>>> ad04e2cf (Version 0.2)
       .then(() => {
         setData(data.filter(row => row.ID !== id));
       })
@@ -100,11 +90,7 @@ const AdminPage = ({ rowData = [] }) => {
       questions: customQuestions.filter(q => q.checked)
     };
 
-<<<<<<< HEAD
     axios.post(`${API_URL}/api/send_to_employee`, updatedRow, { withCredentials: true })
-=======
-    axios.post('{API_URL}/api/send_to_employee', updatedRow, { withCredentials: true })
->>>>>>> ad04e2cf (Version 0.2)
       .then(response => {
         if (response.data.status === 'success') {
           setData(data.filter(r => r.ID !== updatedRow.ID));
