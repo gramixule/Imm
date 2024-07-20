@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
+const API_URL = 'https://imm-a8ub.onrender.com';
+
 const LoginForm = ({ onLogin }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -9,7 +11,11 @@ const LoginForm = ({ onLogin }) => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
+<<<<<<< HEAD
       const response = await axios.post('https://imm-a8ub.onrender.com/api/login', { username, password }, { withCredentials: true });
+=======
+      const response = await axios.post(`${API_URL}/api/login`, { username, password }, { withCredentials: true });
+>>>>>>> ad04e2cf (Version 0.2)
       if (response && response.data && response.data.message && response.data.role) {
         onLogin(response.data.message, response.data.role);
       } else {

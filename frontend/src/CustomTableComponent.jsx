@@ -28,7 +28,9 @@ const CustomTableComponent = ({ data, onDelete, onYes, isEmployeePage }) => {
             <td>{row.Price}</td>
             <td>{row.Type}</td>
             <td>{row["Square Meters"]}</td>
-            <td>{row.Description}</td>
+            <td>
+              <div dangerouslySetInnerHTML={{ __html: row.Description }} />
+            </td>
             <td>{row.Proprietor}</td>
             <td>{row["Phone Number"]}</td>
             <td>{row["Days Since Posted"]}</td>

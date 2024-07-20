@@ -1,0 +1,57 @@
+/* MappingPage.css */
+
+.mapping-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.navbar {
+  width: 100%;
+  background-color: #333;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar h1 {
+  color: #fff;
+}
+
+.navbar .navbar-buttons .btn {
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  padding: 10px 20px;
+  margin-left: 10px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.navbar .navbar-buttons .btn:hover {
+  background-color: #0056b3;
+}
+
+.content {
+  width: 90%;
+  max-width: 1200px;
+  margin: 20px auto;
+  text-align: center;
+}
+
+.filters {
+  margin-bottom: 20px;
+}
+
+.filters label {
+  margin-right: 20px;
+}
+
+.file-upload {
+  margin-bottom: 20px;
+}
+
+.file-upload input[type="file"] {
+  margin-right: 10px;
+}

@@ -5,5 +5,13 @@ numpy
 Werkzeug
 openpyxl
 openai
+<<<<<<< HEAD
 gunicorn
 Flask-Session
+=======
+Flask-Session
+markdown
+Werkzeug
+PyMuPDF
+opencv-python-headless
+>>>>>>> ad04e2cf (Version 0.2)

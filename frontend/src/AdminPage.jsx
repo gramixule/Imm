@@ -4,10 +4,16 @@ import CustomTableComponent from './CustomTableComponent';
 import Modal from './Modal';
 import './AdminPage.css';
 
+<<<<<<< HEAD
 // Define the backend URL from Render
 const API_URL = 'https://imm-a8ub.onrender.com';
 
 const AdminPage = ({ rowData }) => {
+=======
+const API_URL = 'https://imm-a8ub.onrender.com';
+
+const AdminPage = ({ rowData = [] }) => {
+>>>>>>> ad04e2cf (Version 0.2)
   const [data, setData] = useState(rowData);
   const [selectedRow, setSelectedRow] = useState(null);
   const [showModal, setShowModal] = useState(false);
@@ -27,6 +33,9 @@ const AdminPage = ({ rowData }) => {
     cadastru: false,
     schiteProprietate: false
   });
+  const [filterType, setFilterType] = useState('All');
+  const [zoneSearch, setZoneSearch] = useState('');
+  const [sortNewest, setSortNewest] = useState(false);
 
   useEffect(() => {
     if (selectedRow) {
@@ -36,7 +45,7 @@ const AdminPage = ({ rowData }) => {
   }, [selectedRow]);
 
   useEffect(() => {
-    if (!rowData.length) {
+    if (rowData.length === 0) {
       fetchAdminData();
     } else {
       setData(rowData.map(item => ({
@@ -65,7 +74,11 @@ const AdminPage = ({ rowData }) => {
   };
 
   const handleDelete = (id) => {
+<<<<<<< HEAD
     axios.post(`${API_URL}/api/delete_row`, { id }, { withCredentials: true })
+=======
+    axios.post('{API_URL}/api/delete_row', { id }, { withCredentials: true })
+>>>>>>> ad04e2cf (Version 0.2)
       .then(() => {
         setData(data.filter(row => row.ID !== id));
       })
@@ -87,7 +100,11 @@ const AdminPage = ({ rowData }) => {
       questions: customQuestions.filter(q => q.checked)
     };
 
+<<<<<<< HEAD
     axios.post(`${API_URL}/api/send_to_employee`, updatedRow, { withCredentials: true })
+=======
+    axios.post('{API_URL}/api/send_to_employee', updatedRow, { withCredentials: true })
+>>>>>>> ad04e2cf (Version 0.2)
       .then(response => {
         if (response.data.status === 'success') {
           setData(data.filter(r => r.ID !== updatedRow.ID));
@@ -171,11 +188,74 @@ const AdminPage = ({ rowData }) => {
 
   const metrics = calculateMetrics();
 
+  const handleFilterChange = (event) => {
+    setFilterType(event.target.value);
+  };
+
+  const handleZoneSearchChange = (event) => {
+    setZoneSearch(event.target.value);
+  };
+
+  const handleSortNewest = () => {
+    setSortNewest(prevState => !prevState);
+  };
+
+  const extractDays = (daysString) => {
+    const match = daysString.match(/(\d+)/);
+    return match ? parseInt(match[1], 10) : 0;
+  };
+
+  const sortedData = sortNewest
+    ? [...data].sort((a, b) => extractDays(a['Days Since Posted']) - extractDays(b['Days Since Posted']))
+    : [...data].sort((a, b) => extractDays(b['Days Since Posted']) - extractDays(a['Days Since Posted']));
+
+  const filteredData = sortedData.filter(item => {
+    const matchesType = filterType === 'All' || item.Type === filterType;
+    const matchesZone = item.Zone.toLowerCase().includes(zoneSearch.toLowerCase());
+    return matchesType && matchesZone;
+  });
+
+  const openMaps = () => {
+    let address = selectedRow.Description.match(/Adresa postala:\s*([^<]+)/i);
+    if (address) {
+      address = address[1].trim();
+    } else {
+      address = selectedRow.Zone;
+    }
+    window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`, '_blank');
+  };
+
   return (
     <div className="admin-page">
-      <h1>Admin Page</h1>
+      <div className="navbar">
+        <h1>Admin Page</h1>
+        <div className="navbar-buttons">
+          <button className="btn-validation">Validation</button>
+          <button className="btn-mapping">Mapping</button>
+        </div>
+        <div className="filter-section">
+          <label htmlFor="filterType">Filter by Type: </label>
+          <select id="filterType" value={filterType} onChange={handleFilterChange}>
+            <option value="All">All</option>
+            <option value="Teren intravilan">Teren intravilan</option>
+            <option value="Spațiu comercial">Spațiu comercial</option>
+            <option value="Casă single">Casă single</option>
+          </select>
+          <label htmlFor="zoneSearch">Select Zone: </label>
+          <input
+            type="text"
+            id="zoneSearch"
+            value={zoneSearch}
+            onChange={handleZoneSearchChange}
+            placeholder="Enter zone name"
+          />
+          <button onClick={handleSortNewest}>
+            {sortNewest ? 'Show Oldest' : 'Show Newest'}
+          </button>
+        </div>
+      </div>
       <CustomTableComponent
-        data={data}
+        data={filteredData}
         onDelete={handleDelete}
         onYes={handleYes}
         isEmployeePage={false}
@@ -191,7 +271,7 @@ const AdminPage = ({ rowData }) => {
                     <p><strong>Zone:</strong> {selectedRow.Zone}</p>
                     <p><strong>Price:</strong> {selectedRow.Price}</p>
                     <p><strong>Phone Number:</strong> {selectedRow['Phone Number']}</p>
-                    <p><strong>Description:</strong> {selectedRow.Description}</p>
+                    <p><strong>Description:</strong> <div dangerouslySetInnerHTML={{ __html: selectedRow.Description }} /></p>
                   </div>
                   <div className="details-lower">
                     <h3>Additional Details</h3>
@@ -200,76 +280,6 @@ const AdminPage = ({ rowData }) => {
                   </div>
                 </div>
                 <div className="details-right">
-                  <h3>Additional Information</h3>
-                  <form>
-                    <div className="custom-question">
-                      <button
-                        type="button"
-                        onClick={() => toggleQuestionResponse('vecinDirect')}
-                        className={questionResponses['vecinDirect'] ? 'btn-yes' : 'btn-no'}
-                      >
-                        {questionResponses['vecinDirect'] ? 'Selected' : 'Select'}
-                      </button>
-                      <label>1) Vecin Direct</label>
-                    </div>
-                    <div className="custom-question">
-                      <button
-                        type="button"
-                        onClick={() => toggleQuestionResponse('indiviziune')}
-                        className={questionResponses['indiviziune'] ? 'btn-yes' : 'btn-no'}
-                      >
-                        {questionResponses['indiviziune'] ? 'Selected' : 'Select'}
-                      </button>
-                      <label>2) Proprietatea este in indiviziune?</label>
-                    </div>
-                    <div className="custom-question">
-                      <button
-                        type="button"
-                        onClick={() => toggleQuestionResponse('certificatUrbanism')}
-                        className={questionResponses['certificatUrbanism'] ? 'btn-yes' : 'btn-no'}
-                      >
-                        {questionResponses['certificatUrbanism'] ? 'Selected' : 'Select'}
-                      </button>
-                      <label>3) Detineti un certificat de urbanism pentru informare in legatura cu coeficientii urbanistici actuali?</label>
-                    </div>
-                    <div className="custom-question">
-                      <button
-                        type="button"
-                        onClick={() => toggleQuestionResponse('cadastru')}
-                        className={questionResponses['cadastru'] ? 'btn-yes' : 'btn-no'}
-                      >
-                        {questionResponses['cadastru'] ? 'Selected' : 'Select'}
-                      </button>
-                      <label>4) Cadastru</label>
-                    </div>
-                    <div className="custom-question">
-                      <button
-                        type="button"
-                        onClick={() => toggleQuestionResponse('schiteProprietate')}
-                        className={questionResponses['schiteProprietate'] ? 'btn-yes' : 'btn-no'}
-                      >
-                        {questionResponses['schiteProprietate'] ? 'Selected' : 'Select'}
-                      </button>
-                      <label>5) Schite Proprietate - teren</label>
-                    </div>
-                    {customQuestions.map((q, index) => (
-                      <div className="custom-question" key={index}>
-                        <button
-                          type="button"
-                          onClick={() => toggleQuestionCheck(index)}
-                          className={q.checked ? 'btn-yes' : 'btn-no'}
-                        >
-                          {q.checked ? 'Selected' : 'Select'}
-                        </button>
-                        <label>{q.question}</label>
-                      </div>
-                    ))}
-                  </form>
-                </div>
-              </>
-            ) : (
-              <>
-                <div className="details-left">
                   <h3>Additional Information</h3>
                   <form>
                     <label>
@@ -288,6 +298,38 @@ const AdminPage = ({ rowData }) => {
                       <span>Price</span>
                       <input type="number" name="price" value={price} onChange={(e) => setPrice(parseFloat(e.target.value))} />
                     </label>
+                  </form>
+                  <h3>Calculation Results</h3>
+                  <p><strong>Total Land:</strong> {metrics.totalLand} mp</p>
+                  <p><strong>Land Occupation (POT):</strong> {metrics.landOccupation} mp</p>
+                  <p><strong>Usage Coefficient (CUT):</strong> {metrics.usageCoefficient} mp</p>
+                  <p><strong>Unoccupied Land:</strong> {metrics.unoccupiedLand} mp</p>
+                  <p><strong>Price per Square Meter:</strong> {metrics.pricePerSquareMeter} euro/mp</p>
+                  <p><strong>Construction Cost per Square Meter:</strong> {metrics.constructionCostPerSquareMeter} euro/mp</p>
+                  <p><strong>Total Construction Cost:</strong> {metrics.totalConstructionCost} euro</p>
+                  <p><strong>Total Investment Cost:</strong> {metrics.totalInvestmentCost} euro</p>
+                  <p><strong>Selling Price per Square Meter:</strong> {metrics.sellingPricePerSquareMeter} euro/mp</p>
+                  <p><strong>Market Selling Price per Square Meter:</strong> {metrics.marketSellingPricePerSquareMeter} euro/mp</p>
+                  <p><strong>Profit Difference:</strong> {metrics.profitDifference} euro/mp</p>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="details-left">
+                  <h3>Custom Questions</h3>
+                  {customQuestions.map((q, index) => (
+                    <div className="custom-question" key={index}>
+                      <button
+                        type="button"
+                        onClick={() => toggleQuestionCheck(index)}
+                        className={q.checked ? 'btn-yes' : 'btn-no'}
+                      >
+                        {q.checked ? 'Selected' : 'Select'}
+                      </button>
+                      <label>{q.question}</label>
+                    </div>
+                  ))}
+                  <form>
                     <label>
                       <span>Custom Question</span>
                       <input type="text" value={customQuestion} onChange={(e) => setCustomQuestion(e.target.value)} />
@@ -315,26 +357,13 @@ const AdminPage = ({ rowData }) => {
                     <button type="button" onClick={addCustomQuestion}>Add Question</button>
                   </form>
                 </div>
-                <div className="details-right">
-                  <h3>Calculation Results</h3>
-                  <p><strong>Total Land:</strong> {metrics.totalLand} mp</p>
-                  <p><strong>Land Occupation (POT):</strong> {metrics.landOccupation} mp</p>
-                  <p><strong>Usage Coefficient (CUT):</strong> {metrics.usageCoefficient} mp</p>
-                  <p><strong>Unoccupied Land:</strong> {metrics.unoccupiedLand} mp</p>
-                  <p><strong>Price per Square Meter:</strong> {metrics.pricePerSquareMeter} euro/mp</p>
-                  <p><strong>Construction Cost per Square Meter:</strong> {metrics.constructionCostPerSquareMeter} euro/mp</p>
-                  <p><strong>Total Construction Cost:</strong> {metrics.totalConstructionCost} euro</p>
-                  <p><strong>Total Investment Cost:</strong> {metrics.totalInvestmentCost} euro</p>
-                  <p><strong>Selling Price per Square Meter:</strong> {metrics.sellingPricePerSquareMeter} euro/mp</p>
-                  <p><strong>Market Selling Price per Square Meter:</strong> {metrics.marketSellingPricePerSquareMeter} euro/mp</p>
-                  <p><strong>Profit Difference:</strong> {metrics.profitDifference} euro/mp</p>
-                </div>
               </>
             )}
           </div>
           <div className="section-buttons">
             <button onClick={() => setSection(1)} disabled={section === 1}>Section 1</button>
             <button onClick={() => setSection(2)} disabled={section === 2}>Section 2</button>
+            <button onClick={openMaps} className="btn-maps">Maps</button>
             <button onClick={handleSendToEmployee} className="btn-send-to-employee">Send to Employee</button>
           </div>
         </Modal>

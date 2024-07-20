@@ -5,8 +5,13 @@ import AdminPage from "./AdminPage";
 import EmployeePage from "./EmployeePage";
 import LoginForm from "./LoginForm";
 import ValidationPage from "./ValidationPage";
+import MappingPage from "./MappingPage";
 import "./App.css"; // Ensure you have the necessary styles
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> ad04e2cf (Version 0.2)
 const API_URL = 'https://imm-a8ub.onrender.com';
 
 const App = () => {
@@ -23,7 +28,11 @@ const App = () => {
   };
 
   const fetchData = () => {
+<<<<<<< HEAD
     axios.get(`${API_URL}/api/convert`, { withCredentials: true })
+=======
+    axios.get('{API_URL}/api/convert', { withCredentials: true })
+>>>>>>> ad04e2cf (Version 0.2)
       .then(response => {
         console.log("Data fetched:", response.data);
         if (Array.isArray(response.data)) {
@@ -45,7 +54,10 @@ const App = () => {
         <div className="navbar-left">
           <h1>ORICE</h1>
           {role === "admin" && (
-            <Link to="/validation" className="button">Validation</Link>
+            <>
+              <Link to="/validation" className="button">Validation</Link>
+              <Link to="/mapping" className="button">Mapping</Link>
+            </>
           )}
         </div>
         <div className="navbar-right">
@@ -53,7 +65,11 @@ const App = () => {
             <button
               className="button"
               onClick={() => {
+<<<<<<< HEAD
                 axios.post(`${API_URL}/api/logout`, {}, { withCredentials: true })
+=======
+                axios.post('{API_URL}/api/logout', {}, { withCredentials: true })
+>>>>>>> ad04e2cf (Version 0.2)
                   .then(() => {
                     setRole(null);
                     setRowData([]);
@@ -70,6 +86,7 @@ const App = () => {
       </nav>
       <Routes>
         <Route path="/validation" element={<ValidationPage />} />
+        <Route path="/mapping" element={<MappingPage />} />
         <Route path="/" element={
           role ? (
             role === "admin" ? (
