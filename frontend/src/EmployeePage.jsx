@@ -4,7 +4,7 @@ import CustomTableComponent from './CustomTableComponent';
 import Modal from './Modal';
 import './EmployeePage.css';  // Ensure this path is correct
 
-const API_URL = 'https://imm-a8ub.onrender.com';
+const API_URL = 'http://localhost:5000';
 
 const EmployeePage = () => {
   const [rowData, setRowData] = useState([]);

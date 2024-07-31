@@ -1,8 +1,10 @@
-import React from "react";
-import CustomButtonComponent from "./CustomButtonComponent";
-import "./CustomTableComponent.css";
+import React from 'react';
+import CustomButtonComponent from './CustomButtonComponent';
+import './CustomTableComponent.css';
 
-const CustomTableComponent = ({ data, onDelete, onYes, isEmployeePage }) => {
+const CustomTableComponent = ({ data, onDelete, onYes, isEmployeePage, showShortDescription, renderDescription }) => {
+  const tableData = Array.isArray(data) ? data : [];
+
   return (
     <table className="custom-table">
       <thead>
@@ -21,19 +23,21 @@ const CustomTableComponent = ({ data, onDelete, onYes, isEmployeePage }) => {
         </tr>
       </thead>
       <tbody>
-        {data.map((row, index) => (
-          <tr key={row.ID} className={index % 2 === 0 ? "even-row" : "odd-row"}>
+        {tableData.map((row, index) => (
+          <tr key={row.ID} className={index % 2 === 0 ? 'even-row' : 'odd-row'}>
             <td>{row.ID}</td>
             <td>{row.Zone}</td>
             <td>{row.Price}</td>
             <td>{row.Type}</td>
-            <td>{row["Square Meters"]}</td>
+            <td>{row['Square Meters']}</td>
             <td>
-              <div dangerouslySetInnerHTML={{ __html: row.Description }} />
+              {renderDescription ? renderDescription(row) : (
+                <div>{showShortDescription ? row.short_description : row.Description}</div>
+              )}
             </td>
             <td>{row.Proprietor}</td>
-            <td>{row["Phone Number"]}</td>
-            <td>{row["Days Since Posted"]}</td>
+            <td>{row['Phone Number']}</td>
+            <td>{row['Days Since Posted']}</td>
             <td>{row.pricePerSquareMeter}</td>
             <td>
               <CustomButtonComponent

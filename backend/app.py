@@ -7,14 +7,17 @@ import logging
 import pandas as pd
 import numpy as np
 import re
-import markdown
-from werkzeug.security import generate_password_hash, check_password_hash
 import difflib
-import fitz  # PyMuPDF for PDF processing
-import cv2  # OpenCV for image processing
+from werkzeug.security import generate_password_hash, check_password_hash
+from opencage.geocoder import OpenCageGeocode
+from openai import OpenAI
+from flask import send_from_directory
+from dotenv import load_dotenv
 
+
+load_dotenv()
 app = Flask(__name__, static_folder='../frontend/build', static_url_path='/')
-CORS(app, supports_credentials=True, origins=["https://imm-a8ub.onrender.com"])
+CORS(app, supports_credentials=True, origins=["http://localhost:3000"])
 app.secret_key = os.environ.get('SECRET_KEY', 'supersecretkey')  # For session management
 
 # Flask-Session configuration
@@ -30,12 +33,22 @@ logging.getLogger('werkzeug').setLevel(logging.WARNING)
 
 # Load the zones JSON file
 zones_data = []
-zones_file_path = os.path.join(os.path.dirname(__file__), 'zones.json')
+zones_file_path = os.path.join(os.path.dirname(__file__), 'zone_mapping.json')
 try:
     with open(zones_file_path, 'r') as f:
         zones_data = json.load(f)
 except Exception as e:
-    logging.error(f"Error loading zones.json: {e}")
+    logging.error(f"Error loading zone_mapping.json: {e}")
+
+
+# Route to serve the zone_mapping.json file
+@app.route('/zone_mapping')
+def zone_mapping():
+    try:
+        return send_from_directory(os.path.dirname(__file__), 'zone_mapping.json')
+    except Exception as e:
+        app.logger.error(f"Error serving zone_mapping.json: {e}")
+        return jsonify({'message': 'File not found'}), 404
 
 # In-memory user store for demo purposes
 users = {
@@ -48,6 +61,19 @@ employee_data = []
 validation_data = []
 admin_data = []
 additional_details = {}
+
+opencage_api_key = os.getenv('OPENCAGE_API_KEY')
+if not opencage_api_key:
+    raise ValueError("No OPENCAGE_API_KEY set for OpenCage API")
+
+geocoder = OpenCageGeocode(opencage_api_key)
+
+# Initialize OpenAI API key using the new OpenAI client
+openai_api_key = os.getenv("OPENAI_API_KEY")
+if not openai_api_key:
+    raise ValueError("No OPENAI_API_KEY set for OpenAI API")
+
+client = OpenAI(api_key=openai_api_key)
 
 @app.before_request
 def log_session_info():
@@ -95,7 +121,8 @@ def get_data():
 def extract_numbers_before_mp(text):
     try:
         text = str(text)
-        matches = re.findall(r'\b(\d+)\s*mp\b', text, re.IGNORECASE)
+        cleaned_text = re.sub(r'(?<=\d)\.(?=\d)', '', text)
+        matches = re.findall(r'\b(\d+)\s*mp\b', cleaned_text, re.IGNORECASE)
         if matches:
             return int(matches[0])
         else:
@@ -109,6 +136,15 @@ def get_zone_details(zone_name):
     closest_match = difflib.get_close_matches(zone_name_lower, [zone['zone'].lower() for zone in zones_data], n=1, cutoff=0.1)
     if closest_match:
         return next((zone for zone in zones_data if zone['zone'].lower() == closest_match[0]), None)
+    return None
+
+def extract_address(description):
+    address_pattern = re.compile(
+        r'\b(strada|str|drumul|calea|bd|bulevardul|intrarea|piata|p-ta|al|aleea|adresa|int|intrarea)\s+\w+(\s+nr\.?\s*\d+)?',
+        re.IGNORECASE)
+    address_match = address_pattern.search(description)
+    if address_match:
+        return address_match.group(0).strip()
     return None
 
 def extract_details(description, zone_name):
@@ -134,86 +170,67 @@ def extract_details(description, zone_name):
     if zone_details:
         details["ZoneDetails"] = zone_details
 
-    # Extract address with "nr" and number
-    address_pattern = re.compile(
-        r'(strada|str|drumul|calea|bd|bulevardul|intrarea|piata|p-ta|al|aleea|Adresa)\s[\w\s-]+,?\s?nr\.?\s?\d+',
-        re.IGNORECASE)
-    address_match = address_pattern.search(description)
-    if address_match:
-        details["Adresa"] = address_match.group(0).strip()
+    details["Adresa"] = extract_address(description)
 
-    # Extract zone information
     zone_pattern = re.compile(r'zona\s([\w\s]+)', re.IGNORECASE)
     zone_match = zone_pattern.search(description)
     if zone_match:
         details["Zona"] = zone_match.group(1).strip()
 
-    # Extract distances
     distance_pattern = re.compile(r'(\d+\s*m\s*de\s*[\w\s]+)', re.IGNORECASE)
     distances = distance_pattern.findall(description)
     details["Distante"] = distances
 
-    # Extract dimensions
     dimensions_pattern = re.compile(
         r'(lungime(?: de)?\s*\d+\s*m)\s*si\s*(latime(?: de)?\s*\d+\s*m)', re.IGNORECASE)
     dimensions_match = dimensions_pattern.search(description)
     if dimensions_match:
         details["Dimensiuni"] = f"Lungime: {dimensions_match.group(1)}, Latime: {dimensions_match.group(2)}"
 
-    # Extract type of residential area
     tip_zona_pattern = re.compile(r'zona rezidentiala de tip ([\w\s\-]+)', re.IGNORECASE)
     tip_zona_match = tip_zona_pattern.search(description)
     if tip_zona_match:
         details["TipZona"] = tip_zona_match.group(1).strip()
 
-    # Extract commercial space details
     spatiu_comercial_pattern = re.compile(r'spatiul comercial(?: aproximativ)?\s*\d+\s*mp', re.IGNORECASE)
     spatiu_comercial_match = spatiu_comercial_pattern.search(description)
     if spatiu_comercial_match:
         details["SpatiuComercial"] = spatiu_comercial_match.group(0).strip()
 
-    # Extract apartment details
     apartament_pattern = re.compile(r'apartamentul \d+ camere', re.IGNORECASE)
     apartament_match = apartament_pattern.search(description)
     if apartament_match:
         details["Apartament"] = apartament_match.group(0).strip()
 
-    # Extract annex details
     anexa_pattern = re.compile(r'anexa in curte tip garsoniera formata din.*?(?=\.)', re.IGNORECASE)
     anexa_match = anexa_pattern.search(description)
     if anexa_match:
         details["Anexa"] = anexa_match.group(0).strip()
 
-    # Extract total area
     total_pattern = re.compile(r'total \d+\s*mp', re.IGNORECASE)
     total_match = total_pattern.search(description)
     if total_match:
         details["Total"] = total_match.group(0).strip()
 
-    # Extract seismic grade
     grad_seismic_pattern = re.compile(r'cladirea nu are grad seismic', re.IGNORECASE)
     grad_seismic_match = grad_seismic_pattern.search(description)
     if grad_seismic_match:
         details["GradSeismic"] = grad_seismic_match.group(0).strip()
 
-    # Extract separate entries
     intrarile_separate_pattern = re.compile(r'intrarile sunt separate si pot avea continuitate daca se doreste', re.IGNORECASE)
     intrarile_separate_match = intrarile_separate_pattern.search(description)
     if intrarile_separate_match:
         details["IntrarileSeparate"] = intrarile_separate_match.group(0).strip()
 
-    # Extract utility connections
     racordari_pattern = re.compile(r'racordate la (apa|gaze|lumina)', re.IGNORECASE)
     racordari = racordari_pattern.findall(description)
     details["Racordari"] = racordari
 
-    # Extract document status
     acte_pattern = re.compile(r'acte la zi', re.IGNORECASE)
     acte_match = acte_pattern.search(description)
     if acte_match:
         details["Acte"] = acte_match.group(0).strip()
 
-    # Extract price
     pret_pattern = re.compile(r'pret \d+\s*euro discutabil', re.IGNORECASE)
     pret_match = pret_pattern.search(description)
     if pret_match:
@@ -222,57 +239,56 @@ def extract_details(description, zone_name):
     return details
 
 def format_description(description, zone_name):
-    if len(description.split()) < 20:  # Assuming short description is less than 20 words
-        return description
+    return description  # Return the original description without processing
 
-    details = extract_details(description, zone_name)
-    formatted_description = ""
+def generate_short_description(description):
+    return description[:50] + '...'  # Return first 50 characters if no address found
 
-    if details["Adresa"]:
-        formatted_description += f"- **Adresa postala:** {details['Adresa']}\n"
-    if details["Zona"]:
-        formatted_description += f"- **Zona:** {details['Zona']}\n"
-    if details["Distante"]:
-        formatted_description += "- **Distante:**\n"
-        for distanta in details["Distante"]:
-            formatted_description += f"  - {distanta}\n"
-    if details["Dimensiuni"]:
-        formatted_description += f"- **Dimensiuni:** {details['Dimensiuni']}\n"
-    if details["TipZona"]:
-        formatted_description += f"- **TipZona:** {details['TipZona']}\n"
-    if details["SpatiuComercial"]:
-        formatted_description += f"- **Spatiu Comercial:** {details['SpatiuComercial']}\n"
-    if details["Apartament"]:
-        formatted_description += f"- **Apartament:** {details['Apartament']}\n"
-    if details["Anexa"]:
-        formatted_description += f"- **Anexa:** {details['Anexa']}\n"
-    if details["Total"]:
-        formatted_description += f"- **Total:** {details['Total']}\n"
-    if details["GradSeismic"]:
-        formatted_description += f"- **Grad Seismic:** {details['GradSeismic']}\n"
-    if details["IntrarileSeparate"]:
-        formatted_description += f"- **Intrarile Separate:** {details['IntrarileSeparate']}\n"
-    if details["Racordari"]:
-        formatted_description += "- **Racordari:**\n"
-        for racordare in details["Racordari"]:
-            formatted_description += f"  - {racordare}\n"
-    if details["Acte"]:
-        formatted_description += f"- **Acte:** {details['Acte']}\n"
-    if details["Pret"]:
-        formatted_description += f"- **Pret:** {details['Pret']}\n"
-    if details["ZoneDetails"]:
-        formatted_description += f"- **POT:** {details['ZoneDetails']['pot']}\n"
-        formatted_description += f"- **CUT:** {details['ZoneDetails']['cut']}\n"
-        formatted_description += f"- **Obiecții:** {details['ZoneDetails']['obiectii']}\n"
-        formatted_description += f"- **Delimitare:** {details['ZoneDetails']['delimitare']}\n"
+@app.route('/api/update_validation_geocodes', methods=['POST'])
+def update_validation_geocodes():
+    if 'user' not in session or session.get('role') not in ['admin', 'employee']:
+        return jsonify({'message': 'Unauthorized'}), 401
 
-    # Convert Markdown to HTML
-    html_description = markdown.markdown(formatted_description)
+    validation_file_path = os.path.join(os.path.dirname(__file__), 'validation_terenuri.json')
 
-    return html_description
+    try:
+        with open(validation_file_path, 'r') as json_file:
+            validation_data = json.load(json_file)
 
+        for property in validation_data:
+            if 'latitude' not in property or 'longitude' not in property:
+                address = property.get('short_description')
+                lat, lon = geocode_address(address)
+                if lat and lon:
+                    property['latitude'] = lat
+                    property['longitude'] = lon
 
-# Convert XLSX to JSON endpoint
+        with open(validation_file_path, 'w') as json_file:
+            json.dump(validation_data, json_file, indent=4)
+
+        return jsonify(validation_data)
+    except Exception as e:
+        app.logger.error('Error updating validation_terenuri.json', exc_info=True)
+        return jsonify({'error': str(e)}), 500
+
+def geocode_address(address):
+    try:
+        if not opencage_api_key:
+            app.logger.error("OpenCage API key is not set")
+            return None, None
+        app.logger.info(f"Geocoding address: {address}")
+        result = geocoder.geocode(address)
+        if result and len(result):
+            location = result[0]['geometry']
+            app.logger.info(f"Geocoding successful: {address} -> ({location['lat']}, {location['lng']})")
+            return location['lat'], location['lng']
+        else:
+            app.logger.error(f"No geocoding result found for address: {address}")
+            return None, None
+    except Exception as e:
+        app.logger.error(f"Error occurred during geocoding: {e}")
+        return None, None
+
 @app.route('/api/convert', methods=['GET'])
 def convert_xlsx_to_json():
     if 'user' not in session:
@@ -283,11 +299,9 @@ def convert_xlsx_to_json():
     try:
         df = pd.read_excel(xlsx_path)
 
-        # Ensure correct column headers
         df.columns = ['ID', 'Zone', 'Price', 'Type', 'Square Meters', 'Description', 'Proprietor', 'Phone Number',
                       'Days Since Posted', 'Date and Time Posted']
 
-        # Remove "EUR" from the Price column and keep only digits
         def clean_price(price):
             try:
                 return float(price.replace(' EUR', '').replace('.', '').replace(',', '').strip())
@@ -295,25 +309,34 @@ def convert_xlsx_to_json():
                 return None  # Handle non-numeric prices gracefully
 
         df['Price'] = df['Price'].apply(clean_price)
-
-        # Use extract_numbers_before_mp to clean "Square Meters" column
         df['Square Meters'] = df['Square Meters'].apply(extract_numbers_before_mp)
 
-        # Format the Description column
-        df['Description'] = df.apply(lambda row: format_description(row['Description'], row['Zone']), axis=1)
+        df['short_description'] = df.apply(
+            lambda row: generate_short_description(row['Description']) if row['Type'] == 'Teren intravilan' else row['Description'],
+            axis=1
+        )
 
-        # Replace NaN values with None (null in JSON)
+        # Add markdown_description
+        df['markdown_description'] = df['Description'].apply(lambda desc: markdown_description(desc))
+
         df = df.replace({np.nan: None})
 
-        # Convert DataFrame to JSON
         json_data = df.to_dict(orient='records')
 
-        # Save the JSON data to a file
+        app.logger.info("Saving JSON data to file")
         json_file_path = os.path.join(os.path.dirname(__file__), '123.json')
+        teren_intravilan_file_path = os.path.join(os.path.dirname(__file__), 'teren_intravilan.json')
+        validation_terenuri_file_path = os.path.join(os.path.dirname(__file__), 'validation_terenuri.json')
+
         with open(json_file_path, 'w') as json_file:
             json.dump(json_data, json_file, indent=4)
 
-        # Update the in-memory admin_data
+        df_teren_intravilan = df[df['Type'] == 'Teren intravilan']
+        json_data_teren_intravilan = df_teren_intravilan.to_dict(orient='records')
+
+        with open(teren_intravilan_file_path, 'w') as json_file:
+            json.dump(json_data_teren_intravilan, json_file, indent=4)
+
         global admin_data
         admin_data = json_data
 
@@ -322,14 +345,38 @@ def convert_xlsx_to_json():
         app.logger.error('Error processing the XLSX file', exc_info=True)
         return jsonify({'error': str(e)}), 500
 
+
 @app.route('/api/get_json_data', methods=['GET'])
 def get_json_data():
-    json_file_path = os.path.join(os.path.dirname(__file__), '123.json')
+    file_type = request.args.get('type', 'all')
+    if file_type == 'teren_intravilan':
+        json_file_path = os.path.join(os.path.dirname(__file__), 'teren_intravilan.json')
+    elif file_type == 'casa_single':
+        json_file_path = os.path.join(os.path.dirname(__file__), 'casa_single.json')
+    elif file_type == 'spatiu_comercial':
+        json_file_path = os.path.join(os.path.dirname(__file__), 'spatiu_comercial.json')
+    elif file_type == 'validation_terenuri':
+        json_file_path = os.path.join(os.path.dirname(__file__), 'validation_terenuri.json')
+    else:
+        json_file_path = os.path.join(os.path.dirname(__file__), '123.json')
+
     if not os.path.exists(json_file_path):
         return jsonify({'message': 'JSON file not found'}), 404
+
     with open(json_file_path, 'r') as json_file:
         json_data = json.load(json_file)
+
+    # Check for markdown_description and generate it if missing
+    for entry in json_data:
+        if not entry.get('markdown_description'):
+            entry['markdown_description'] = markdown_description(entry['Description'])
+
+    # Save the updated JSON data
+    with open(json_file_path, 'w') as json_file:
+        json.dump(json_data, json_file, indent=4)
+
     return jsonify(json_data)
+
 
 @app.route('/api/delete_row', methods=['POST'])
 def delete_row():
@@ -346,13 +393,10 @@ def delete_row():
         df.columns = ['ID', 'Zone', 'Price', 'Type', 'Square Meters', 'Description', 'Proprietor', 'Phone Number',
                       'Days Since Posted', 'Date and Time Posted']
 
-        # Delete the row from the DataFrame
         df = df[df['ID'] != row_id]
 
-        # Save the updated DataFrame back to the Excel file
         df.to_excel(xlsx_path, index=False)
 
-        # Update the in-memory admin_data
         global admin_data
         admin_data = df.to_dict(orient='records')
 
@@ -369,14 +413,13 @@ def send_to_employee():
 
     data = request.get_json()
 
-    # Ensure the custom questions are added to the employee data
     custom_questions = data.get('questions', [])
     row_to_send = {**data, 'questions': custom_questions}
 
     global admin_data, employee_data
     admin_data = [row for row in admin_data if row['ID'] != data['ID']]
 
-    employee_data.append(row_to_send)  # Also add to employee_data
+    employee_data.append(row_to_send)
 
     return jsonify({'status': 'success'})
 
@@ -391,9 +434,14 @@ def send_to_validation():
     global employee_data, validation_data
     employee_data = [row for row in employee_data if row['ID'] != data['ID']]
 
-    validation_data.append(data)  # Add to validation_data
+    validation_data.append(data)
 
     return jsonify({'status': 'success'})
+
+def markAsNew(data):
+    # Add any logic needed to mark the data as new
+    data['status'] = 'new'
+    return data
 
 @app.route('/api/save_details', methods=['POST'])
 def save_details():
@@ -402,15 +450,16 @@ def save_details():
         return jsonify({'message': 'Unauthorized'}), 401
     data = request.get_json()
     app.logger.info(f"Received data for saving: {data}")
-    # Update the corresponding row in employee_data
+
     for i, row in enumerate(employee_data):
         if row['ID'] == data['ID']:
             data = markAsNew(data)
             employee_data[i] = data
             validation_data.append(data)
-            employee_data.pop(i)  # Remove the updated row from employee_data
+            employee_data.pop(i)
             app.logger.info(f"Updated data sent back to validation: {data}")
             break
+
     additional_details[data['ID']] = {
         "streetNumber": data.get('streetNumber'),
         "additionalDetails": data.get('additionalDetails')
@@ -456,92 +505,83 @@ def get_employee_data():
         return jsonify({'message': 'Unauthorized'}), 401
     return jsonify(employee_data)
 
+
 @app.route('/api/validation_data', methods=['GET'])
 def get_validation_data():
     if 'user' not in session or session.get('role') not in ['employee', 'admin']:
         app.logger.warning("Unauthorized access attempt")
         return jsonify({'message': 'Unauthorized'}), 401
+
+    global validation_data
+    if not validation_data:
+        # Load validation data from JSON file
+        try:
+            validation_file_path = os.path.join(os.path.dirname(__file__), 'validation_terenuri.json')
+            with open(validation_file_path, 'r') as json_file:
+                validation_data = json.load(json_file)
+            app.logger.info(f"Loaded validation data from {validation_file_path}")
+        except Exception as e:
+            app.logger.error('Error loading validation_terenuri.json', exc_info=True)
+            return jsonify({'error': str(e)}), 500
+
     return jsonify(validation_data)
 
-@app.route('/api/get_zone_info', methods=['POST'])
-def get_zone_info():
+@app.route('/api/markdown_description', methods=['POST'])
+def get_markdown_description():
     if 'user' not in session:
-        app.logger.warning("Unauthorized access attempt")
         return jsonify({'message': 'Unauthorized'}), 401
 
     data = request.get_json()
-    zone_name = data.get('zone')
+    description = data.get('description', '')
 
-    if not zone_name:
-        return jsonify({'message': 'Zone name is required'}), 400
+    if not description:
+        return jsonify({'message': 'Description is required'}), 400
 
-    zone_name_lower = zone_name.lower()
-    all_zones = [zone['zone'].lower() for zone in zones_data]
-    closest_match = difflib.get_close_matches(zone_name_lower, all_zones, n=1, cutoff=0.1)
+    markdown_text = markdown_description(description)
+    return jsonify({'markdown': markdown_text})
 
-    if closest_match:
-        matching_zone = next((zone for zone in zones_data if zone['zone'].lower() == closest_match[0]), None)
-        if matching_zone:
-            app.logger.info(f"Found zone: {matching_zone}")
-            return jsonify(matching_zone), 200
-        else:
-            app.logger.warning("Zone not found")
-            return jsonify({'message': 'Zone not found'}), 404
-    else:
-        app.logger.warning("Zone not found")
-        return jsonify({'message': 'Zone not found'}), 404
-
-def markAsNew(data):
-    data['isNew'] = True
-    return data
-
-@app.route('/api/extract_zones_from_pdf', methods=['POST'])
-def extract_zones_from_pdf():
-    if 'user' not in session:
-        return jsonify({'message': 'Unauthorized'}), 401
-
-    file = request.files['file']
-    file_path = os.path.join(os.path.dirname(__file__), 'uploads', file.filename)
-    file.save(file_path)
-
-    zones = []
-
+def markdown_description(description):
     try:
-        pdf_document = fitz.open(file_path)
-        for page_number in range(pdf_document.page_count):
-            page = pdf_document.load_page(page_number)
-            pix = page.get_pixmap()
-            image_path = f"/tmp/page_{page_number}.png"
-            pix.save(image_path)
-
-            # Convert image to OpenCV format
-            image = cv2.imread(image_path)
-            gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-            edges = cv2.Canny(gray, 50, 150, apertureSize=3)
-
-            contours, _ = cv2.findContours(edges, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-            for contour in contours:
-                epsilon = 0.02 * cv2.arcLength(contour, True)
-                approx = cv2.approxPolyDP(contour, epsilon, True)
-
-                if len(approx) > 5:  # Assuming the red zones are complex polygons
-                    coordinates = [(point[0][1], point[0][0]) for point in approx]  # Convert to (lat, lng)
-                    zones.append({
-                        'zone': f'Page {page_number + 1}',
-                        'coordinates': coordinates
-                    })
-
-        return jsonify({'zones': zones}), 200
+        prompt = (
+            "Te rog să formatezi și să structurezi următoarea descriere imobiliară în markdown, ca și "
+            "cum ai fi un agent imobiliar profesionist. Asigură-te că incluzi secțiuni clare pentru "
+            "Adresa, Locație, Facilități, Acte și alte detalii relevante. Nu pune titlu, nu folosi bold, "
+            "nu fa resize la tabel, vreau să fie cât mai structurate și cât mai simple de citit. "
+            "Ca exemplu de cum vreau să arate: \n"
+            "Localizare: \n"
+            "  - Adresa: \n"
+            "  - Zona: \n"
+            "Caracteristici: \n"
+            "  - Suprafața terenului: \n"
+            "  - Construcții existente: \n"
+            "  - Posibilități: \n"
+            "  - Certificate de urbanism: \n"
+            "    - POT: \n"
+            "    - CUT: \n"
+            "    - Deschidere: \n"
+            "Accesibilitate și facilități: \n"
+            "  - Proximitate: \n"
+            "Descriere zonă: \n"
+            "  - Infrastructură și facilități: \n"
+            "Informații suplimentare: \n\n"
+            f"{description}"
+        )
+        response = client.chat.completions.create(
+            model="gpt-4o",
+            messages=[
+                {"role": "user", "content": prompt},
+            ],
+            max_tokens=500,
+            n=1,
+            stop=None,
+            temperature=0.9
+        )
+        markdown_text = response.choices[0].message.content.strip()
+        return markdown_text
     except Exception as e:
-        app.logger.error(f"Error processing PDF: {e}")
-        return jsonify({'message': f'Error processing PDF: {str(e)}'}), 500
+        app.logger.error(f"Error generating markdown: {e}")
+        return description  # Return the original description if there's an error
 
-# Endpoint to serve uploaded files
-@app.route('/uploads/<path:filename>', methods=['GET'])
-def download_file(filename):
-    return send_from_directory('uploads', filename)
 
-if __name__ == "__main__":
-    if not os.path.exists('uploads'):
-        os.makedirs('uploads')
-    app.run(host='0.0.0.0', port=5000)
+if __name__ == '__main__':
+    app.run(debug=True)

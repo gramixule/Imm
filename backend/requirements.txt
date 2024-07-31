@@ -9,6 +9,10 @@ gunicorn
 Flask-Session
 Flask-Session
 markdown
+Markdown
 Werkzeug
 PyMuPDF
 opencv-python-headless
+opencage
+openai
+python-dotenv

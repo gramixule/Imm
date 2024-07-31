@@ -3,9 +3,9 @@ import axios from 'axios';
 import CustomTableComponent from './CustomTableComponent';
 import Modal from './Modal';
 import './AdminPage.css';
+import ReactMarkdown from 'react-markdown';
 
-// Define the backend URL from Render
-const API_URL = 'https://imm-a8ub.onrender.com';
+const API_URL = 'http://localhost:5000';
 
 const AdminPage = ({ rowData = [] }) => {
   const [data, setData] = useState(rowData);
@@ -44,17 +44,19 @@ const AdminPage = ({ rowData = [] }) => {
     } else {
       setData(rowData.map(item => ({
         ...item,
-        pricePerSquareMeter: calculatePricePerSquareMeter(item.Price, item['Square Meters'])
+        pricePerSquareMeter: calculatePricePerSquareMeter(item.Price, item['Square Meters']),
+        short_description: item.short_description || item.Description
       })));
     }
   }, [rowData]);
 
-  const fetchAdminData = () => {
-    axios.get(`${API_URL}/api/admin_data`, { withCredentials: true })
+  const fetchAdminData = (type = 'all') => {
+    axios.get(`${API_URL}/api/get_json_data?type=${type}`, { withCredentials: true })
       .then(response => {
         const dataWithPricePerSquareMeter = response.data.map(item => ({
           ...item,
-          pricePerSquareMeter: calculatePricePerSquareMeter(item.Price, item['Square Meters'])
+          pricePerSquareMeter: calculatePricePerSquareMeter(item.Price, item['Square Meters']),
+          short_description: item.short_description || item.Description
         }));
         setData(dataWithPricePerSquareMeter);
       })
@@ -78,8 +80,9 @@ const AdminPage = ({ rowData = [] }) => {
   };
 
   const handleYes = (row) => {
-    setSelectedRow({ ...row });
-    setShowModal(true);
+     const queryString = new URLSearchParams(row).toString();
+     const newWindowUrl = `/details?${queryString}`;
+  window.open(newWindowUrl, '_blank');
   };
 
   const handleSendToEmployee = () => {
@@ -176,6 +179,7 @@ const AdminPage = ({ rowData = [] }) => {
 
   const handleFilterChange = (event) => {
     setFilterType(event.target.value);
+    fetchAdminData(event.target.value.replace(' ', '_').toLowerCase());
   };
 
   const handleZoneSearchChange = (event) => {
@@ -200,6 +204,25 @@ const AdminPage = ({ rowData = [] }) => {
     const matchesZone = item.Zone.toLowerCase().includes(zoneSearch.toLowerCase());
     return matchesType && matchesZone;
   });
+
+  const generateMarkdownIfNeeded = async (row) => {
+    if (!row.markdown_description) {
+      try {
+        const response = await axios.post(`${API_URL}/api/markdown_description`, { description: row.Description }, { withCredentials: true });
+        if (response && response.data && response.data.markdown) {
+          row.markdown_description = response.data.markdown;
+          // Optionally update the JSON data on the server
+          await axios.post(`${API_URL}/api/update_row`, { row }, { withCredentials: true });
+        }
+      } catch (error) {
+        console.error('There was an error generating the markdown description!', error);
+      }
+    }
+  };
+
+  useEffect(() => {
+    filteredData.forEach(generateMarkdownIfNeeded);
+  }, [filteredData]);
 
   const openMaps = () => {
     let address = selectedRow.Description.match(/Adresa postala:\s*([^<]+)/i);
@@ -245,6 +268,10 @@ const AdminPage = ({ rowData = [] }) => {
         onDelete={handleDelete}
         onYes={handleYes}
         isEmployeePage={false}
+        showShortDescription={filterType === 'Teren intravilan'}
+        renderDescription={(row) => (
+          <ReactMarkdown>{row.markdown_description || row.Description}</ReactMarkdown>
+        )}
       />
       {showModal && selectedRow && (
         <Modal show={showModal} onClose={handleCloseModal}>
