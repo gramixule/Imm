@@ -17,7 +17,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 app = Flask(__name__, static_folder='../frontend/build', static_url_path='/')
-CORS(app, supports_credentials=True, origins=["http://localhost:3000"])
+CORS(app, supports_credentials=True, origins=["https://imm-a8ub.onrender.com"])
 app.secret_key = os.environ.get('SECRET_KEY', 'supersecretkey')  # For session management
 
 # Flask-Session configuration
