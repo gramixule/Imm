@@ -289,7 +289,7 @@ def geocode_address(address):
     except Exception as e:
         app.logger.error(f"Error occurred during geocoding: {e}")
         return None, None
-        
+
 @app.route('/api/convert', methods=['GET'])
 def convert_xlsx_to_json():
     if 'user' not in session:
@@ -331,7 +331,7 @@ def convert_xlsx_to_json():
         async def process_markdown_descriptions(descriptions):
             loop = asyncio.get_event_loop()
             with ThreadPoolExecutor() as executor:
-                futures = [loop.run_in_executor(executor, generate_markdown, desc) for desc in descriptions]
+                futures = [loop.run_in_executor(executor, asyncio.wait_for(generate_markdown(desc), timeout=120)) for desc in descriptions]
                 return await asyncio.gather(*futures)
 
         # Get list of descriptions
