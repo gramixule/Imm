@@ -28,24 +28,6 @@ Session(app)
 logging.basicConfig(level=logging.INFO)
 logging.getLogger('werkzeug').setLevel(logging.WARNING)
 
-# Load the zones JSON file
-zones_data = []
-zones_file_path = os.path.join(os.path.dirname(__file__), 'zone_mapping.json')
-try:
-    with open(zones_file_path, 'r') as f:
-        zones_data = json.load(f)
-except Exception as e:
-    logging.error(f"Error loading zone_mapping.json: {e}")
-
-# Route to serve the zone_mapping.json file
-@app.route('/zone_mapping')
-def zone_mapping():
-    try:
-        return send_from_directory(os.path.dirname(__file__), 'zone_mapping.json')
-    except Exception as e:
-        app.logger.error(f"Error serving zone_mapping.json: {e}")
-        return jsonify({'message': 'File not found'}), 404
-
 # In-memory user store for demo purposes
 users = {
     "admin": generate_password_hash("adminpassword"),
@@ -127,66 +109,47 @@ def extract_numbers_before_mp(text):
         app.logger.error(f"Error occurred while extracting numbers before 'mp': {e}")
         return None
 
-def get_zone_details(zone_name):
-    zone_name_lower = zone_name.lower()
-    closest_match = difflib.get_close_matches(zone_name_lower, [zone['zone'].lower() for zone in zones_data], n=1, cutoff=0.1)
-    if closest_match:
-        return next((zone for zone in zones_data if zone['zone'].lower() == closest_match[0]), None)
-    return None
-
-def extract_address(description):
-    address_pattern = re.compile(
-        r'\b(strada|str|drumul|calea|bd|bulevardul|intrarea|piata|p-ta|al|aleea|adresa|int|intrarea)\s+\w+(\s+nr\.?\s*\d+)?',
-        re.IGNORECASE)
-    address_match = address_pattern.search(description)
-    if address_match:
-        return address_match.group(0).strip()
-    return None
-
-@app.route('/api/update_validation_geocodes', methods=['POST'])
-def update_validation_geocodes():
-    if 'user' not in session or session.get('role') not in ['admin', 'employee']:
-        return jsonify({'message': 'Unauthorized'}), 401
-
-    validation_file_path = os.path.join(os.path.dirname(__file__), 'validation_terenuri.json')
-
+def markdown_description(description):
     try:
-        with open(validation_file_path, 'r') as json_file:
-            validation_data = json.load(json_file)
-
-        for property in validation_data:
-            if 'latitude' not in property or 'longitude' not in property:
-                address = property.get('short_description')
-                lat, lon = geocode_address(address)
-                if lat and lon:
-                    property['latitude'] = lat
-                    property['longitude'] = lon
-
-        with open(validation_file_path, 'w') as json_file:
-            json.dump(validation_data, json_file, indent=4)
-
-        return jsonify(validation_data)
+        prompt = (
+            "Te rog să formatezi și să structurezi următoarea descriere imobiliară în markdown, ca și "
+            "cum ai fi un agent imobiliar profesionist. Asigură-te că incluzi secțiuni clare pentru "
+            "Adresa, Locație, Facilități, Acte și alte detalii relevante. Nu pune titlu, nu folosi bold, "
+            "nu fa resize la tabel, vreau să fie cât mai structurate și cât mai simple de citit. "
+            "Ca exemplu de cum vreau să arate: \n"
+            "Localizare: \n"
+            "  - Adresa: \n"
+            "  - Zona: \n"
+            "Caracteristici: \n"
+            "  - Suprafața terenului: \n"
+            "  - Construcții existente: \n"
+            "  - Posibilități: \n"
+            "  - Certificate de urbanism: \n"
+            "    - POT: \n"
+            "    - CUT: \n"
+            "    - Deschidere: \n"
+            "Accesibilitate și facilități: \n"
+            "  - Proximitate: \n"
+            "Descriere zonă: \n"
+            "  - Infrastructură și facilități: \n"
+            "Informații suplimentare: \n\n"
+            f"{description}"
+        )
+        response = client.chat.completions.create(
+            model="gpt-4",
+            messages=[
+                {"role": "user", "content": prompt},
+            ],
+            max_tokens=500,
+            n=1,
+            stop=None,
+            temperature=0.9
+        )
+        markdown_text = response.choices[0].message.content.strip()
+        return markdown_text
     except Exception as e:
-        app.logger.error('Error updating validation_terenuri.json', exc_info=True)
-        return jsonify({'error': str(e)}), 500
-
-def geocode_address(address):
-    try:
-        if not opencage_api_key:
-            app.logger.error("OpenCage API key is not set")
-            return None, None
-        app.logger.info(f"Geocoding address: {address}")
-        result = geocoder.geocode(address)
-        if result and len(result):
-            location = result[0]['geometry']
-            app.logger.info(f"Geocoding successful: {address} -> ({location['lat']}, {location['lng']})")
-            return location['lat'], location['lng']
-        else:
-            app.logger.error(f"No geocoding result found for address: {address}")
-            return None, None
-    except Exception as e:
-        app.logger.error(f"Error occurred during geocoding: {e}")
-        return None, None
+        app.logger.error(f"Error generating markdown: {e}")
+        return description  # Return the original description if there's an error
 
 @app.route('/api/convert', methods=['GET'])
 def convert_xlsx_to_json():
@@ -219,11 +182,6 @@ def convert_xlsx_to_json():
         df['Price'] = df['Price'].apply(clean_price)
         df['Square Meters'] = df['Square Meters'].apply(extract_numbers_before_mp)
 
-        df['short_description'] = df.apply(
-            lambda row: generate_short_description(row['Description']) if row['Type'] == 'Teren intravilan' else row['Description'],
-            axis=1
-        )
-
         # Synchronously generate markdown descriptions
         df['markdown_description'] = df['Description'].apply(markdown_description)
 
@@ -248,48 +206,6 @@ def convert_xlsx_to_json():
     except Exception as e:
         app.logger.error(f'Error processing the XLSX file: {e}', exc_info=True)
         return jsonify({'error': str(e)}), 500
-
-def markdown_description(description):
-    try:
-        prompt = (
-            "Te rog să formatezi și să structurezi următoarea descriere imobiliară în markdown, ca și "
-            "cum ai fi un agent imobiliar profesionist. Asigură-te că incluzi secțiuni clare pentru "
-            "Adresa, Locație, Facilități, Acte și alte detalii relevante. Nu pune titlu, nu folosi bold, "
-            "nu fa resize la tabel, vreau să fie cât mai structurate și cât mai simple de citit. "
-            "Ca exemplu de cum vreau să arate: \n"
-            "Localizare: \n"
-            "  - Adresa: \n"
-            "  - Zona: \n"
-            "Caracteristici: \n"
-            "  - Suprafața terenului: \n"
-            "  - Construcții existente: \n"
-            "  - Posibilități: \n"
-            "  - Certificate de urbanism: \n"
-            "    - POT: \n"
-            "    - CUT: \n"
-            "    - Deschidere: \n"
-            "Accesibilitate și facilități: \n"
-            "  - Proximitate: \n"
-            "Descriere zonă: \n"
-            "  - Infrastructură și facilități: \n"
-            "Informații suplimentare: \n\n"
-            f"{description}"
-        )
-        response = client.chat.completions.create(
-            model="gpt-4o",
-            messages=[
-                {"role": "user", "content": prompt},
-            ],
-            max_tokens=500,
-            n=1,
-            stop=None,
-            temperature=0.9
-        )
-        markdown_text = response.choices[0].message.content.strip()
-        return markdown_text
-    except Exception as e:
-        app.logger.error(f"Error generating markdown: {e}")
-        return description  # Return the original description if there's an error
 
 @app.route('/api/get_json_data', methods=['GET'])
 def get_json_data():
@@ -470,48 +386,6 @@ def get_markdown_description():
 
     markdown_text = markdown_description(description)
     return jsonify({'markdown': markdown_text})
-
-def markdown_description(description):
-    try:
-        prompt = (
-            "Te rog să formatezi și să structurezi următoarea descriere imobiliară în markdown, ca și "
-            "cum ai fi un agent imobiliar profesionist. Asigură-te că incluzi secțiuni clare pentru "
-            "Adresa, Locație, Facilități, Acte și alte detalii relevante. Nu pune titlu, nu folosi bold, "
-            "nu fa resize la tabel, vreau să fie cât mai structurate și cât mai simple de citit. "
-            "Ca exemplu de cum vreau să arate: \n"
-            "Localizare: \n"
-            "  - Adresa: \n"
-            "  - Zona: \n"
-            "Caracteristici: \n"
-            "  - Suprafața terenului: \n"
-            "  - Construcții existente: \n"
-            "  - Posibilități: \n"
-            "  - Certificate de urbanism: \n"
-            "    - POT: \n"
-            "    - CUT: \n"
-            "    - Deschidere: \n"
-            "Accesibilitate și facilități: \n"
-            "  - Proximitate: \n"
-            "Descriere zonă: \n"
-            "  - Infrastructură și facilități: \n"
-            "Informații suplimentare: \n\n"
-            f"{description}"
-        )
-        response = client.chat.completions.create(
-            model="gpt-4o",
-            messages=[
-                {"role": "user", "content": prompt},
-            ],
-            max_tokens=500,
-            n=1,
-            stop=None,
-            temperature=0.9
-        )
-        markdown_text = response.choices[0].message.content.strip()
-        return markdown_text
-    except Exception as e:
-        app.logger.error(f"Error generating markdown: {e}")
-        return description  # Return the original description if there's an error
 
 if __name__ == '__main__':
     app.run(debug=True)
