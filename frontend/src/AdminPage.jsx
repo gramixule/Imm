@@ -5,7 +5,7 @@ import Modal from './Modal';
 import './AdminPage.css';
 import ReactMarkdown from 'react-markdown';
 
-const API_URL = 'http://localhost:5000';
+const API_URL = 'https://imm-a8ub.onrender.com';
 
 const AdminPage = ({ rowData = [] }) => {
   const [data, setData] = useState(rowData);
