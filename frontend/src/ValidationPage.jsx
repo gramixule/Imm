@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import './ValidationPage.css';
 import ReactMarkdown from 'react-markdown';
 
-const API_URL = 'http://localhost:5000';
+const API_URL = 'https://imm-a8ub.onrender.com';
 
 const ValidationPage = () => {
   const [data, setData] = useState([]);
