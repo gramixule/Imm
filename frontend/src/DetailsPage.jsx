@@ -5,7 +5,7 @@ import ReactMarkdown from 'react-markdown';
 import './DetailsPage.css';
 import MapComponent from './MapComponent';
 
-const API_URL = 'http://localhost:5000';
+const API_URL = 'https://imm-a8ub.onrender.com';
 
 const DetailsPage = () => {
   const location = useLocation();
