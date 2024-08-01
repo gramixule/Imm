@@ -272,17 +272,7 @@ def convert_xlsx_to_json():
 
 @app.route('/api/get_json_data', methods=['GET'])
 def get_json_data():
-    file_type = request.args.get('type', 'all')
-    if file_type == 'teren_intravilan':
-        json_file_path = os.path.join(os.path.dirname(__file__), 'teren_intravilan.json')
-    elif file_type == 'casa_single':
-        json_file_path = os.path.join(os.path.dirname(__file__), 'casa_single.json')
-    elif file_type == 'spatiu_comercial':
-        json_file_path = os.path.join(os.path.dirname(__file__), 'spatiu_comercial.json')
-    elif file_type == 'validation_terenuri':
-        json_file_path = os.path.join(os.path.dirname(__file__), 'validation_terenuri.json')
-    else:
-        json_file_path = os.path.join(os.path.dirname(__file__), '123.json')
+    json_file_path = os.path.join(os.path.dirname(__file__), '123.json')
 
     if not os.path.exists(json_file_path):
         return jsonify({'message': 'JSON file not found'}), 404
@@ -294,10 +284,6 @@ def get_json_data():
     for entry in json_data:
         if not entry.get('markdown_description'):
             entry['markdown_description'] = markdown_description(entry['Description'])
-
-    # Save the updated JSON data
-    with open(json_file_path, 'w') as json_file:
-        json.dump(json_data, json_file, indent=4)
 
     return jsonify(json_data)
 
