@@ -5,7 +5,7 @@ import 'leaflet/dist/leaflet.css';
 import axios from 'axios';
 import './MappingPage.css';
 
-const API_URL = 'http://localhost:5000';
+const API_URL = 'https://imm-a8ub.onrender.com';
 
 const MappingPage = () => {
   const [zones, setZones] = useState([]);
