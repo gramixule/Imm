@@ -383,7 +383,7 @@ def save_details():
     app.logger.info(f"Received data for saving: {data}")
 
     for i, row in enumerate(employee_data):
-        if row['ID'] == data['ID']]:
+        if row['ID'] == data['ID']:
             data = markAsNew(data)
             employee_data[i] = data
             validation_data.append(data)
