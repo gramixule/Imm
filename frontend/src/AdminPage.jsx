@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import CustomTableComponent from './CustomTableComponent';
 import Modal from './Modal';
 import './AdminPage.css';
@@ -30,6 +31,8 @@ const AdminPage = ({ rowData = [] }) => {
   const [filterType, setFilterType] = useState('All');
   const [zoneSearch, setZoneSearch] = useState('');
   const [sortNewest, setSortNewest] = useState(false);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (selectedRow) {
@@ -80,9 +83,10 @@ const AdminPage = ({ rowData = [] }) => {
   };
 
   const handleYes = (row) => {
-     const queryString = new URLSearchParams(row).toString();
-     const newWindowUrl = `/details?${queryString}`;
-  window.open(newWindowUrl, '_blank');
+    navigate({
+      pathname: '/details',
+      state: { rowData: row }
+    });
   };
 
   const handleSendToEmployee = () => {
