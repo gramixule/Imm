@@ -7,13 +7,10 @@ import logging
 import pandas as pd
 import numpy as np
 import re
-import difflib
-import asyncio
 from werkzeug.security import generate_password_hash, check_password_hash
 from opencage.geocoder import OpenCageGeocode
 from openai import OpenAI
 from dotenv import load_dotenv
-from concurrent.futures import ThreadPoolExecutor
 
 load_dotenv()
 app = Flask(__name__, static_folder='../frontend/build', static_url_path='/')
@@ -39,7 +36,6 @@ try:
         zones_data = json.load(f)
 except Exception as e:
     logging.error(f"Error loading zone_mapping.json: {e}")
-
 
 # Route to serve the zone_mapping.json file
 @app.route('/zone_mapping')
@@ -199,6 +195,7 @@ def convert_xlsx_to_json():
         return jsonify({'message': 'Unauthorized'}), 401
 
     xlsx_path = os.path.join(os.path.dirname(__file__), '123.xlsx')
+    json_file_path = os.path.join(os.path.dirname(__file__), '123.json')
     app.logger.info(f"Loading Excel file from path: {xlsx_path}")
 
     try:
@@ -235,10 +232,14 @@ def convert_xlsx_to_json():
         json_data = df.to_dict(orient='records')
 
         app.logger.info("Saving JSON data to file")
-        json_file_path = os.path.join(os.path.dirname(__file__), '123.json')
-
-        with open(json_file_path, 'w') as json_file:
-            json.dump(json_data, json_file, indent=4)
+        
+        try:
+            with open(json_file_path, 'w') as json_file:
+                json.dump(json_data, json_file, indent=4)
+            app.logger.info("JSON file saved successfully")
+        except Exception as e:
+            app.logger.error(f"Error writing to JSON file: {e}")
+            return jsonify({'error': 'Error writing to JSON file'}), 500
 
         global admin_data
         admin_data = json_data
@@ -247,6 +248,48 @@ def convert_xlsx_to_json():
     except Exception as e:
         app.logger.error(f'Error processing the XLSX file: {e}', exc_info=True)
         return jsonify({'error': str(e)}), 500
+
+def markdown_description(description):
+    try:
+        prompt = (
+            "Te rog să formatezi și să structurezi următoarea descriere imobiliară în markdown, ca și "
+            "cum ai fi un agent imobiliar profesionist. Asigură-te că incluzi secțiuni clare pentru "
+            "Adresa, Locație, Facilități, Acte și alte detalii relevante. Nu pune titlu, nu folosi bold, "
+            "nu fa resize la tabel, vreau să fie cât mai structurate și cât mai simple de citit. "
+            "Ca exemplu de cum vreau să arate: \n"
+            "Localizare: \n"
+            "  - Adresa: \n"
+            "  - Zona: \n"
+            "Caracteristici: \n"
+            "  - Suprafața terenului: \n"
+            "  - Construcții existente: \n"
+            "  - Posibilități: \n"
+            "  - Certificate de urbanism: \n"
+            "    - POT: \n"
+            "    - CUT: \n"
+            "    - Deschidere: \n"
+            "Accesibilitate și facilități: \n"
+            "  - Proximitate: \n"
+            "Descriere zonă: \n"
+            "  - Infrastructură și facilități: \n"
+            "Informații suplimentare: \n\n"
+            f"{description}"
+        )
+        response = client.chat.completions.create(
+            model="gpt-4o",
+            messages=[
+                {"role": "user", "content": prompt},
+            ],
+            max_tokens=500,
+            n=1,
+            stop=None,
+            temperature=0.9
+        )
+        markdown_text = response.choices[0].message.content.strip()
+        return markdown_text
+    except Exception as e:
+        app.logger.error(f"Error generating markdown: {e}")
+        return description  # Return the original description if there's an error
 
 @app.route('/api/get_json_data', methods=['GET'])
 def get_json_data():
@@ -340,7 +383,7 @@ def save_details():
     app.logger.info(f"Received data for saving: {data}")
 
     for i, row in enumerate(employee_data):
-        if row['ID'] == data['ID']:
+        if row['ID'] == data['ID']]:
             data = markAsNew(data)
             employee_data[i] = data
             validation_data.append(data)
@@ -469,7 +512,6 @@ def markdown_description(description):
     except Exception as e:
         app.logger.error(f"Error generating markdown: {e}")
         return description  # Return the original description if there's an error
-
 
 if __name__ == '__main__':
     app.run(debug=True)
