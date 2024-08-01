@@ -42,7 +42,8 @@ const ValidationPage = () => {
   };
 
   const handleYes = (row) => {
-    navigate('/details', { state: { selectedRow: row } });
+    const rowWithMarkdown = { ...row, markdownDescription: markdownDescriptions[row.ID] || row.Description };
+    navigate('/details', { state: { selectedRow: rowWithMarkdown } });
   };
 
   const handleDelete = (id) => {
