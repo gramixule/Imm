@@ -151,62 +151,6 @@ def markdown_description(description):
         app.logger.error(f"Error generating markdown: {e}")
         return description  # Return the original description if there's an error
 
-@app.route('/api/convert', methods=['GET'])
-def convert_xlsx_to_json():
-    if 'user' not in session:
-        app.logger.warning("Unauthorized access attempt")
-        return jsonify({'message': 'Unauthorized'}), 401
-
-    xlsx_path = os.path.join(os.path.dirname(__file__), '123.xlsx')
-    json_file_path = os.path.join(os.path.dirname(__file__), '123.json')
-    app.logger.info(f"Loading Excel file from path: {xlsx_path}")
-
-    try:
-        if not os.path.exists(xlsx_path):
-            app.logger.error(f"Excel file does not exist at path: {xlsx_path}")
-            return jsonify({'error': 'Excel file not found'}), 404
-
-        df = pd.read_excel(xlsx_path, engine='openpyxl')
-        app.logger.info("Excel file loaded successfully")
-
-        df.columns = ['ID', 'Zone', 'Price', 'Type', 'Square Meters', 'Description', 'Proprietor', 'Phone Number',
-                      'Days Since Posted', 'Date and Time Posted']
-
-        def clean_price(price):
-            try:
-                return float(price.replace(' EUR', '').replace('.', '').replace(',', '').strip())
-            except (ValueError, AttributeError):
-                app.logger.error(f"Error cleaning price: {price}")
-                return None  # Handle non-numeric prices gracefully
-
-        df['Price'] = df['Price'].apply(clean_price)
-        df['Square Meters'] = df['Square Meters'].apply(extract_numbers_before_mp)
-
-        # Synchronously generate markdown descriptions
-        df['markdown_description'] = df['Description'].apply(markdown_description)
-
-        df = df.replace({np.nan: None})
-
-        json_data = df.to_dict(orient='records')
-
-        app.logger.info("Saving JSON data to file")
-        
-        try:
-            with open(json_file_path, 'w') as json_file:
-                json.dump(json_data, json_file, indent=4)
-            app.logger.info("JSON file saved successfully")
-        except Exception as e:
-            app.logger.error(f"Error writing to JSON file: {e}")
-            return jsonify({'error': 'Error writing to JSON file'}), 500
-
-        global admin_data
-        admin_data = json_data
-
-        return jsonify(json_data)
-    except Exception as e:
-        app.logger.error(f'Error processing the XLSX file: {e}', exc_info=True)
-        return jsonify({'error': str(e)}), 500
-
 @app.route('/api/get_json_data', methods=['GET'])
 def get_json_data():
     json_file_path = os.path.join(os.path.dirname(__file__), '123.json')
@@ -224,7 +168,6 @@ def get_json_data():
 
     return jsonify(json_data)
 
-
 @app.route('/api/delete_row', methods=['POST'])
 def delete_row():
     if 'user' not in session:
@@ -234,22 +177,22 @@ def delete_row():
     data = request.get_json()
     row_id = data.get('id')
 
-    xlsx_path = os.path.join(os.path.dirname(__file__), '123.xlsx')
+    json_file_path = os.path.join(os.path.dirname(__file__), '123.json')
     try:
-        df = pd.read_excel(xlsx_path)
-        df.columns = ['ID', 'Zone', 'Price', 'Type', 'Square Meters', 'Description', 'Proprietor', 'Phone Number',
-                      'Days Since Posted', 'Date and Time Posted']
+        with open(json_file_path, 'r') as json_file:
+            json_data = json.load(json_file)
 
-        df = df[df['ID'] != row_id]
+        json_data = [row for row in json_data if row['ID'] != row_id]
 
-        df.to_excel(xlsx_path, index=False)
+        with open(json_file_path, 'w') as json_file:
+            json.dump(json_data, json_file, indent=4)
 
         global admin_data
-        admin_data = df.to_dict(orient='records')
+        admin_data = json_data
 
         return jsonify({'status': 'success'})
     except Exception as e:
-        app.logger.error('Error deleting row from the XLSX file', exc_info=True)
+        app.logger.error('Error deleting row from the JSON file', exc_info=True)
         return jsonify({'error': str(e)}), 500
 
 @app.route('/api/send_to_employee', methods=['POST'])
