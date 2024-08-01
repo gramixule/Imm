@@ -288,7 +288,7 @@ def geocode_address(address):
     except Exception as e:
         app.logger.error(f"Error occurred during geocoding: {e}")
         return None, None
-
+        
 @app.route('/api/convert', methods=['GET'])
 def convert_xlsx_to_json():
     if 'user' not in session:
@@ -299,6 +299,10 @@ def convert_xlsx_to_json():
     app.logger.info(f"Loading Excel file from path: {xlsx_path}")
 
     try:
+        if not os.path.exists(xlsx_path):
+            app.logger.error(f"Excel file does not exist at path: {xlsx_path}")
+            return jsonify({'error': 'Excel file not found'}), 404
+
         df = pd.read_excel(xlsx_path, engine='openpyxl')
         app.logger.info("Excel file loaded successfully")
 
@@ -309,6 +313,7 @@ def convert_xlsx_to_json():
             try:
                 return float(price.replace(' EUR', '').replace('.', '').replace(',', '').strip())
             except (ValueError, AttributeError):
+                app.logger.error(f"Error cleaning price: {price}")
                 return None  # Handle non-numeric prices gracefully
 
         df['Price'] = df['Price'].apply(clean_price)
@@ -347,8 +352,6 @@ def convert_xlsx_to_json():
     except Exception as e:
         app.logger.error(f'Error processing the XLSX file: {e}', exc_info=True)
         return jsonify({'error': str(e)}), 500
-
-
 
 @app.route('/api/get_json_data', methods=['GET'])
 def get_json_data():
