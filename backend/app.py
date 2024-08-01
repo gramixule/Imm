@@ -328,15 +328,17 @@ def convert_xlsx_to_json():
         async def generate_markdown(description):
             return markdown_description(description)
 
-        loop = asyncio.new_event_loop()
-        asyncio.set_event_loop(loop)
-        executor = ThreadPoolExecutor()
-        futures = [
-            loop.run_in_executor(executor, generate_markdown, desc) if pd.isna(row.get('markdown_description')) else row.get('markdown_description')
-            for desc, row in zip(df['Description'], df.to_dict('records'))
-        ]
+        async def process_markdown_descriptions(descriptions):
+            loop = asyncio.get_event_loop()
+            with ThreadPoolExecutor() as executor:
+                futures = [loop.run_in_executor(executor, generate_markdown, desc) for desc in descriptions]
+                return await asyncio.gather(*futures)
 
-        markdown_descriptions = loop.run_until_complete(asyncio.gather(*futures))
+        # Get list of descriptions
+        descriptions = df['Description'].tolist()
+
+        # Run the asynchronous processing
+        markdown_descriptions = asyncio.run(process_markdown_descriptions(descriptions))
 
         df['markdown_description'] = markdown_descriptions
 
