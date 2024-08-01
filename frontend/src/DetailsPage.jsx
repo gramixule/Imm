@@ -9,35 +9,20 @@ const API_URL = 'https://imm-a8ub.onrender.com';
 
 const DetailsPage = () => {
   const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
-
-  const selectedRow = {
-    ID: queryParams.get('ID'),
-    Zone: queryParams.get('Zone'),
-    Price: queryParams.get('Price'),
-    Type: queryParams.get('Type'),
-    'Square Meters': queryParams.get('Square Meters'),
-    Description: queryParams.get('Description'),
-    Proprietor: queryParams.get('Proprietor'),
-    'Phone Number': queryParams.get('Phone Number'),
-    'Days Since Posted': queryParams.get('Days Since Posted'),
-    'Date and Time Posted': queryParams.get('Date and Time Posted'),
-    short_description: queryParams.get('short_description'),
-    markdown_description: queryParams.get('markdown_description'),
-  };
+  const { rowData } = location.state || {};
 
   const [cut, setCut] = useState(0.2);
   const [pot, setPot] = useState(15);
-  const [squareMeters, setSquareMeters] = useState(selectedRow['Square Meters']);
-  const [price, setPrice] = useState(selectedRow.Price);
+  const [squareMeters, setSquareMeters] = useState(rowData?.['Square Meters']);
+  const [price, setPrice] = useState(rowData?.Price);
   const [zones, setZones] = useState([]);
   const [validationData, setValidationData] = useState([]);
   const [zonesVisible, setZonesVisible] = useState(true);
   const [showMarkdown, setShowMarkdown] = useState(true);
 
   useEffect(() => {
-    setSquareMeters(selectedRow['Square Meters']);
-    setPrice(selectedRow.Price);
+    setSquareMeters(rowData?.['Square Meters']);
+    setPrice(rowData?.Price);
 
     const fetchZones = async () => {
       try {
@@ -59,7 +44,7 @@ const DetailsPage = () => {
 
     fetchZones();
     fetchValidationData();
-  }, [selectedRow]);
+  }, [rowData]);
 
   const calculateMetrics = () => {
     const totalLand = squareMeters;
@@ -93,8 +78,8 @@ const DetailsPage = () => {
 
   const handleSendToEmployee = () => {
     const updatedRow = {
-      ...selectedRow,
-      questions: selectedRow.questions || [],
+      ...rowData,
+      questions: rowData?.questions || [],
       cut,
       pot,
       squareMeters,
@@ -122,14 +107,18 @@ const DetailsPage = () => {
     setShowMarkdown(!showMarkdown);
   };
 
+  if (!rowData) {
+    return <div>No data available.</div>;
+  }
+
   return (
     <div className="details-page">
       <div className="sections-container">
         <div className="section full-details">
           <h3>FULL DETAILS ANUNT</h3>
-          <p><strong>Zone:</strong> {selectedRow.Zone}</p>
-          <p><strong>Price:</strong> {selectedRow.Price}</p>
-          <p><strong>Phone Number:</strong> {selectedRow['Phone Number']}</p>
+          <p><strong>Zone:</strong> {rowData.Zone}</p>
+          <p><strong>Price:</strong> {rowData.Price}</p>
+          <p><strong>Phone Number:</strong> {rowData['Phone Number']}</p>
           <div>
             <strong>Description:</strong>
             <button onClick={toggleDescriptionView} className="btn-toggle-description">
@@ -137,15 +126,15 @@ const DetailsPage = () => {
             </button>
             <div>
               {showMarkdown ? (
-                <ReactMarkdown>{selectedRow.markdown_description || selectedRow.Description}</ReactMarkdown>
+                <ReactMarkdown>{rowData.markdown_description || rowData.Description}</ReactMarkdown>
               ) : (
-                <p>{selectedRow.Description}</p>
+                <p>{rowData.Description}</p>
               )}
             </div>
           </div>
           <h3>Additional Details</h3>
-          <p><strong>Street Number:</strong> {selectedRow.streetNumber}</p>
-          <p><strong>Additional Details:</strong> {selectedRow.additionalDetails}</p>
+          <p><strong>Street Number:</strong> {rowData.streetNumber}</p>
+          <p><strong>Additional Details:</strong> {rowData.additionalDetails}</p>
         </div>
         <div className="section images">
           <h3>IMAGES AN UNT</h3>
