@@ -347,7 +347,7 @@ def send_to_employee():
 
     return jsonify({'status': 'success'})
 
-@app.route('/api/send_to_validation', methods['POST'])
+@app.route('/api/send_to_validation', methods=['POST'])
 def send_to_validation():
     if 'user' not in session or session.get('role') != 'employee':
         app.logger.warning("Unauthorized access attempt")
