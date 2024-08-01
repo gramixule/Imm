@@ -1,5 +1,7 @@
-import React from "react";
+// CustomButtonComponent.jsx
+import React from 'react';
 import './CustomButtonComponent.css';
+
 const CustomButtonComponent = ({ row, onDelete, onYes, isEmployeePage }) => {
   const handleYesClick = () => {
     onYes(row);
