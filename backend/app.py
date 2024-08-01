@@ -8,12 +8,13 @@ import pandas as pd
 import numpy as np
 import re
 import difflib
+import asyncio
 from werkzeug.security import generate_password_hash, check_password_hash
 from opencage.geocoder import OpenCageGeocode
 from openai import OpenAI
 from flask import send_from_directory
 from dotenv import load_dotenv
-
+from concurrent.futures import ThreadPoolExecutor
 
 load_dotenv()
 app = Flask(__name__, static_folder='../frontend/build', static_url_path='/')
@@ -324,8 +325,20 @@ def convert_xlsx_to_json():
             axis=1
         )
 
-        # Add markdown_description
-        df['markdown_description'] = df['Description'].apply(lambda desc: markdown_description(desc))
+        async def generate_markdown(description):
+            return markdown_description(description)
+
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
+        executor = ThreadPoolExecutor()
+        futures = [
+            loop.run_in_executor(executor, generate_markdown, desc) if pd.isna(row.get('markdown_description')) else row.get('markdown_description')
+            for desc, row in zip(df['Description'], df.to_dict('records'))
+        ]
+
+        markdown_descriptions = loop.run_until_complete(asyncio.gather(*futures))
+
+        df['markdown_description'] = markdown_descriptions
 
         df = df.replace({np.nan: None})
 
