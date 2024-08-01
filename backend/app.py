@@ -296,8 +296,11 @@ def convert_xlsx_to_json():
         return jsonify({'message': 'Unauthorized'}), 401
 
     xlsx_path = os.path.join(os.path.dirname(__file__), '123.xlsx')
+    app.logger.info(f"Loading Excel file from path: {xlsx_path}")
+
     try:
-        df = pd.read_excel(xlsx_path)
+        df = pd.read_excel(xlsx_path, engine='openpyxl')
+        app.logger.info("Excel file loaded successfully")
 
         df.columns = ['ID', 'Zone', 'Price', 'Type', 'Square Meters', 'Description', 'Proprietor', 'Phone Number',
                       'Days Since Posted', 'Date and Time Posted']
@@ -342,8 +345,9 @@ def convert_xlsx_to_json():
 
         return jsonify(json_data)
     except Exception as e:
-        app.logger.error('Error processing the XLSX file', exc_info=True)
+        app.logger.error(f'Error processing the XLSX file: {e}', exc_info=True)
         return jsonify({'error': str(e)}), 500
+
 
 
 @app.route('/api/get_json_data', methods=['GET'])
