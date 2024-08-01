@@ -9,7 +9,7 @@ import MappingPage from "./MappingPage";
 import DetailsPage from "./DetailsPage"; // Import the DetailsPage component
 import "./App.css"; // Ensure you have the necessary styles
 
-const API_URL = 'http://localhost:5000';
+const API_URL = 'https://imm-a8ub.onrender.com';
 
 const App = () => {
   const [role, setRole] = useState(null);
