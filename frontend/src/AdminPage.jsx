@@ -1,3 +1,4 @@
+// AdminPage.jsx
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -83,10 +84,7 @@ const AdminPage = ({ rowData = [] }) => {
   };
 
   const handleYes = (row) => {
-    navigate({
-      pathname: '/details',
-      state: { rowData: row }
-    });
+    navigate('/details', { state: { rowData: row } });
   };
 
   const handleSendToEmployee = () => {
