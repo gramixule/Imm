@@ -227,22 +227,8 @@ def convert_xlsx_to_json():
             axis=1
         )
 
-        async def generate_markdown(description):
-            return markdown_description(description)
-
-        async def process_markdown_descriptions(descriptions):
-            loop = asyncio.get_event_loop()
-            with ThreadPoolExecutor() as executor:
-                futures = [loop.run_in_executor(executor, asyncio.wait_for(generate_markdown(desc), timeout=120)) for desc in descriptions]
-                return await asyncio.gather(*futures)
-
-        # Get list of descriptions
-        descriptions = df['Description'].tolist()
-
-        # Run the asynchronous processing
-        markdown_descriptions = asyncio.run(process_markdown_descriptions(descriptions))
-
-        df['markdown_description'] = markdown_descriptions
+        # Synchronously generate markdown descriptions
+        df['markdown_description'] = df['Description'].apply(markdown_description)
 
         df = df.replace({np.nan: None})
 
@@ -250,17 +236,9 @@ def convert_xlsx_to_json():
 
         app.logger.info("Saving JSON data to file")
         json_file_path = os.path.join(os.path.dirname(__file__), '123.json')
-        teren_intravilan_file_path = os.path.join(os.path.dirname(__file__), 'teren_intravilan.json')
-        validation_terenuri_file_path = os.path.join(os.path.dirname(__file__), 'validation_terenuri.json')
 
         with open(json_file_path, 'w') as json_file:
             json.dump(json_data, json_file, indent=4)
-
-        df_teren_intravilan = df[df['Type'] == 'Teren intravilan']
-        json_data_teren_intravilan = df_teren_intravilan.to_dict(orient='records')
-
-        with open(teren_intravilan_file_path, 'w') as json_file:
-            json.dump(json_data_teren_intravilan, json_file, indent=4)
 
         global admin_data
         admin_data = json_data
