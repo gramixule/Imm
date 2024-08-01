@@ -16,3 +16,4 @@ opencv-python-headless
 opencage
 openai
 python-dotenv
+httpx
