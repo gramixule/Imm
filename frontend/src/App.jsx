@@ -38,7 +38,7 @@ const App = () => {
       })
       .catch(error => {
         console.error('There was an error fetching the data!', error);
-        setError('Este asta eroare?!');
+        setError('There was an error fetching the data!');
       });
   };
 
@@ -65,6 +65,9 @@ const App = () => {
               <Link to="/update-data" className="button">Update Data</Link>
             </>
           )}
+          {role === "employee" && (
+            <Link to="/employee" className="button">Employee</Link>
+          )}
         </div>
         <div className="navbar-right">
           {role && (
@@ -81,7 +84,8 @@ const App = () => {
         <Route path="/validation" element={<ValidationPage />} />
         <Route path="/mapping" element={<MappingPage />} />
         <Route path="/details" element={<DetailsPage />} /> {/* Add the DetailsPage route */}
-         <Route path="/update-data" element={<UpdateDataPage />} />
+        <Route path="/update-data" element={<UpdateDataPage />} />
+        <Route path="/employee" element={<EmployeePage />} /> {/* Add the EmployeePage route */}
         <Route path="/" element={
           role ? (
             role === "admin" ? (
