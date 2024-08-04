@@ -1,1 +1,15 @@
+// src/UpdateDataPage.js
 
+import React from 'react';
+
+const UpdateDataPage = () => {
+  return (
+    <div>
+      <h2>Update Data Page</h2>
+      <p>This is where you can update your data.</p>
+      {/* Add form or functionalities to update data */}
+    </div>
+  );
+};
+
+export default UpdateDataPage;
