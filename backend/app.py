@@ -325,6 +325,25 @@ def get_markdown_description():
     markdown_text = markdown_description(description)
     return jsonify({'markdown': markdown_text})
 
+@app.route('/api/upload', methods=['POST'])
+def upload_file():
+    if 'file' not in request.files:
+        return jsonify({'message': 'No file part'}), 400
+    file = request.files['file']
+    if file.filename == '':
+        return jsonify({'message': 'No selected file'}), 400
+    if file and file.filename.endswith('.xlsx'):
+        file_path = os.path.join('/path/to/save', file.filename)  # Update the path to save the file
+        file.save(file_path)
+        try:
+            df = pd.read_excel(file_path)
+            # Process the DataFrame as needed
+            return jsonify({'message': 'File uploaded and processed successfully'}), 200
+        except Exception as e:
+            return jsonify({'message': f'Error processing file: {e}'}), 500
+    else:
+        return jsonify({'message': 'Invalid file type'}), 400
+
 # Fallback route for React Router
 @app.errorhandler(404)
 def not_found(e):
