@@ -1,4 +1,4 @@
-/* src/UpdateDataPage.css */
+/* UpdateDataPage.css */
 .update-data-page {
   display: flex;
 }
@@ -38,4 +38,12 @@ th {
 
 .success {
   color: green;
+}
+
+.json-content {
+  white-space: pre-wrap;
+  background-color: #f4f4f4;
+  padding: 10px;
+  border: 1px solid #ccc;
+  margin-top: 20px;
 }
