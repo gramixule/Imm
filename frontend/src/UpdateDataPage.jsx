@@ -11,8 +11,6 @@ const UpdateDataPage = () => {
   const [success, setSuccess] = useState('');
   const [fileContent, setFileContent] = useState([]);
   const [jsonContent, setJsonContent] = useState(null);
-  const [selectedId, setSelectedId] = useState(null);
-  const [inputValue, setInputValue] = useState('');
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
@@ -67,41 +65,37 @@ const UpdateDataPage = () => {
     });
   };
 
+  const handleAddMarkdown = () => {
+    const updatedContent = fileContent.map(item => ({
+      ...item,
+      markdown_description: item.markdown_description || '',
+    }));
+    setFileContent(updatedContent);
+    setJsonContent(JSON.stringify(updatedContent, null, 2));
+    setError('');
+    setSuccess('Markdown descriptions added.');
+  };
+
+  const handleAddAddress = () => {
+    const updatedContent = fileContent.map(item => ({
+      ...item,
+      address: item.address || '',
+    }));
+    setFileContent(updatedContent);
+    setJsonContent(JSON.stringify(updatedContent, null, 2));
+    setError('');
+    setSuccess('Addresses added.');
+  };
+
   const handleTransformToJson = () => {
     if (fileContent.length === 0) {
       setError('No file content to transform.');
       return;
     }
 
-    const transformedData = fileContent.map(item => ({
-      ...item,
-      markdown_description: '',
-      address: '',
-    }));
-
-    setJsonContent(JSON.stringify(transformedData, null, 2));
+    setJsonContent(JSON.stringify(fileContent, null, 2));
     setError('');
     setSuccess('File content transformed to JSON.');
-  };
-
-  const handleUpdateField = (field) => {
-    if (!selectedId || !inputValue) {
-      setError('Please select an ID and enter a value.');
-      return;
-    }
-
-    const updatedContent = fileContent.map(item => {
-      if (item.id === selectedId) {
-        return { ...item, [field]: inputValue };
-      }
-      return item;
-    });
-
-    setFileContent(updatedContent);
-    setJsonContent(JSON.stringify(updatedContent, null, 2));
-    setError('');
-    setSuccess(`${field} updated successfully.`);
-    setInputValue(''); // Clear input value after update
   };
 
   return (
@@ -137,22 +131,8 @@ const UpdateDataPage = () => {
         <input type="file" accept=".xlsx" onChange={handleFileChange} />
         <button onClick={handleFileUpload}>Upload File</button>
         <button onClick={handleTransformToJson}>Transform to JSON</button>
-        <div className="update-section">
-          <input
-            type="text"
-            placeholder="Enter ID"
-            value={selectedId}
-            onChange={(e) => setSelectedId(e.target.value)}
-          />
-          <input
-            type="text"
-            placeholder="Enter value"
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-          />
-          <button onClick={() => handleUpdateField('markdown_description')}>Update Markdown</button>
-          <button onClick={() => handleUpdateField('address')}>Update Address</button>
-        </div>
+        <button onClick={handleAddMarkdown}>Add Markdown Description</button>
+        <button onClick={handleAddAddress}>Add Address</button>
         {error && <p className="error">{error}</p>}
         {success && <p className="success">{success}</p>}
         {jsonContent && (
