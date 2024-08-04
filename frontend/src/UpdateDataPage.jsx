@@ -26,7 +26,7 @@ const UpdateDataPage = () => {
       const sheetName = workbook.SheetNames[0];
       const worksheet = workbook.Sheets[sheetName];
       const json = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-      const headers = ['id', 'zone', 'type', 'mp', 'descriere', 'proprietar', 'phone', 'date since posted', 'date'];
+      const headers = ['id', 'zone', 'price', 'type', 'mp', 'descriere', 'proprietar', 'phone', 'date since posted', 'date'];
       const formattedData = json.slice(1).map((row) => {
         const formattedRow = {};
         headers.forEach((header, index) => {
