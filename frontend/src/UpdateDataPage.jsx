@@ -3,7 +3,7 @@ import axios from 'axios';
 import * as XLSX from 'xlsx';
 import './UpdateDataPage.css'; // Import the CSS file
 
-const API_URL = 'https://imm-a8ub.onrender.com'; // URL for Flask backend
+const API_URL = 'https://imm-a8ub.onrender.com'; // Base URL for your Flask backend
 
 const UpdateDataPage = () => {
   const [file, setFile] = useState(null);
@@ -25,8 +25,16 @@ const UpdateDataPage = () => {
       const workbook = XLSX.read(data, { type: 'array' });
       const sheetName = workbook.SheetNames[0];
       const worksheet = workbook.Sheets[sheetName];
-      const json = XLSX.utils.sheet_to_json(worksheet);
-      setFileContent(json);
+      const json = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+      const headers = ['id', 'zone', 'type', 'mp', 'descriere', 'proprietar', 'phone', 'date since posted', 'date'];
+      const formattedData = json.slice(1).map((row) => {
+        const formattedRow = {};
+        headers.forEach((header, index) => {
+          formattedRow[header] = row[index];
+        });
+        return formattedRow;
+      });
+      setFileContent(formattedData);
     };
     reader.readAsArrayBuffer(file);
   };
