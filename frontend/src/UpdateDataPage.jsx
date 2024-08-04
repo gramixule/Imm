@@ -3,7 +3,7 @@ import axios from 'axios';
 import * as XLSX from 'xlsx';
 import './UpdateDataPage.css'; // Import the CSS file
 
-const API_URL = 'https://imm-a8ub.onrender.com'; // Base URL for your Flask backend
+const API_URL = 'https://imm-a8ub.onrender.com'; // URL for Flask backend
 
 const UpdateDataPage = () => {
   const [file, setFile] = useState(null);
