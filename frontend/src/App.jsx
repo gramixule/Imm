@@ -7,6 +7,7 @@ import LoginForm from "./LoginForm";
 import ValidationPage from "./ValidationPage";
 import MappingPage from "./MappingPage";
 import DetailsPage from "./DetailsPage"; // Import the DetailsPage component
+import UpdateDataPage from "./UpdateDataPage";
 import "./App.css"; // Ensure you have the necessary styles
 
 const API_URL = 'https://imm-a8ub.onrender.com';
@@ -61,6 +62,7 @@ const App = () => {
             <>
               <Link to="/validation" className="button">Validation</Link>
               <Link to="/mapping" className="button">Mapping</Link>
+              <Link to="/update-data" className="button">Update Data</Link>
             </>
           )}
         </div>
@@ -79,6 +81,7 @@ const App = () => {
         <Route path="/validation" element={<ValidationPage />} />
         <Route path="/mapping" element={<MappingPage />} />
         <Route path="/details" element={<DetailsPage />} /> {/* Add the DetailsPage route */}
+         <Route path="/update-data" element={<UpdateDataPage />} />
         <Route path="/" element={
           role ? (
             role === "admin" ? (
