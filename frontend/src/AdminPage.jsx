@@ -205,7 +205,8 @@ const AdminPage = ({ rowData = [] }) => {
     const matchesZone = item.Zone.toLowerCase().includes(zoneSearch.toLowerCase());
     return matchesType && matchesZone;
   });
-
+  
+  {/*
   const generateMarkdownIfNeeded = async (row) => {
     if (!row.markdown_description) {
       try {
@@ -220,7 +221,8 @@ const AdminPage = ({ rowData = [] }) => {
       }
     }
   };
-
+*/}
+  
   useEffect(() => {
     filteredData.forEach(generateMarkdownIfNeeded);
   }, [filteredData]);
