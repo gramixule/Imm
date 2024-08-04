@@ -63,6 +63,7 @@ const App = () => {
               <Link to="/validation" className="button">Validation</Link>
               <Link to="/mapping" className="button">Mapping</Link>
               <Link to="/update-data" className="button">Update Data</Link>
+              <Link to="/employee" className="button">Employee</Link> {/* Add this line */}
             </>
           )}
           {role === "employee" && (
