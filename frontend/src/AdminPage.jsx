@@ -239,10 +239,6 @@ const AdminPage = ({ rowData = [] }) => {
     <div className="admin-page">
       <div className="navbar">
         <h1>Admin Page</h1>
-        <div className="navbar-buttons">
-          <button className="btn-validation">Validation</button>
-          <button className="btn-mapping">Mapping</button>
-        </div>
         <div className="filter-section">
           <label htmlFor="filterType">Filter by Type: </label>
           <select id="filterType" value={filterType} onChange={handleFilterChange}>
