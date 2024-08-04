@@ -27,7 +27,11 @@ const DetailsPage = () => {
     const fetchZones = async () => {
       try {
         const response = await axios.get(`${API_URL}/zone_mapping`);
-        setZones(response.data);
+        if (Array.isArray(response.data)) {
+          setZones(response.data);
+        } else {
+          console.error('Error fetching zones: Data is not an array');
+        }
       } catch (error) {
         console.error('Error fetching zones:', error);
       }
@@ -36,7 +40,11 @@ const DetailsPage = () => {
     const fetchValidationData = async () => {
       try {
         const response = await axios.get(`${API_URL}/api/validation_data`, { withCredentials: true });
-        setValidationData(response.data);
+        if (Array.isArray(response.data)) {
+          setValidationData(response.data);
+        } else {
+          console.error('Error fetching validation data: Data is not an array');
+        }
       } catch (error) {
         console.error('Error fetching validation data:', error);
       }
