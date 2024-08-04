@@ -143,8 +143,9 @@ def markdown_description(description):
             stop=None,
             temperature=0.9
         )
-        # Correctly handle the response object
-        markdown_text = response.choices[0].message.content.strip()
+        # Convert response object to dictionary
+        response_dict = response.model_dump()
+        markdown_text = response_dict['choices'][0]['message']['content'].strip()
         return markdown_text
     except Exception as e:
         app.logger.error(f"Error generating markdown: {e}")
@@ -255,7 +256,7 @@ def save_details():
     app.logger.info(f"Additional details saved: {additional_details[data['ID']]}")
     return jsonify({'status': 'success'})
 
-@app.route('/api/get_additional_details', methods=['GET'])
+@app.route('/api/get_additional_details', methods['GET'])
 def get_additional_details():
     if 'user' not in session:
         app.logger.warning("Unauthorized access attempt")
