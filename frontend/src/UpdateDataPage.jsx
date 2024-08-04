@@ -26,12 +26,14 @@ const UpdateDataPage = () => {
       const sheetName = workbook.SheetNames[0];
       const worksheet = workbook.Sheets[sheetName];
       const json = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
-      const headers = ['id', 'zone','pret', 'type', 'mp', 'descriere', 'proprietar', 'phone', 'date since posted', 'date'];
+      const headers = ['id', 'zone', 'type', 'mp', 'descriere', 'proprietar', 'phone', 'date since posted', 'date'];
       const formattedData = json.slice(1).map((row) => {
         const formattedRow = {};
         headers.forEach((header, index) => {
           formattedRow[header] = row[index];
         });
+        formattedRow['markdown_description'] = '';
+        formattedRow['address'] = '';
         return formattedRow;
       });
       setFileContent(formattedData);
@@ -69,7 +71,13 @@ const UpdateDataPage = () => {
       return;
     }
 
-    setJsonContent(JSON.stringify(fileContent, null, 2));
+    const transformedData = fileContent.map(item => ({
+      ...item,
+      markdown_description: '',
+      address: '',
+    }));
+
+    setJsonContent(JSON.stringify(transformedData, null, 2));
     setError('');
     setSuccess('File content transformed to JSON.');
   };
