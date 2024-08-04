@@ -3,13 +3,14 @@ import axios from 'axios';
 import * as XLSX from 'xlsx';
 import './UpdateDataPage.css'; // Import the CSS file
 
-const API_URL = 'https://imm-a8ub.onrender.com'; 
+const API_URL = 'https://imm-a8ub.onrender.com'; // Base URL for your Flask backend
 
 const UpdateDataPage = () => {
   const [file, setFile] = useState(null);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [fileContent, setFileContent] = useState([]);
+  const [jsonContent, setJsonContent] = useState(null);
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
@@ -54,6 +55,17 @@ const UpdateDataPage = () => {
     });
   };
 
+  const handleTransformToJson = () => {
+    if (fileContent.length === 0) {
+      setError('No file content to transform.');
+      return;
+    }
+
+    setJsonContent(JSON.stringify(fileContent, null, 2));
+    setError('');
+    setSuccess('File content transformed to JSON.');
+  };
+
   return (
     <div className="update-data-page">
       <div className="left-section">
@@ -86,8 +98,14 @@ const UpdateDataPage = () => {
         <p>This is where you can update your data.</p>
         <input type="file" accept=".xlsx" onChange={handleFileChange} />
         <button onClick={handleFileUpload}>Upload File</button>
+        <button onClick={handleTransformToJson}>Transform to JSON</button>
         {error && <p className="error">{error}</p>}
         {success && <p className="success">{success}</p>}
+        {jsonContent && (
+          <pre className="json-content">
+            {jsonContent}
+          </pre>
+        )}
       </div>
     </div>
   );
