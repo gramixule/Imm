@@ -82,18 +82,16 @@ def logout():
     app.logger.info("User logged out")
     return jsonify({"message": "Logout successful"}), 200
 
-@app.route('/api/data', methods=['POST'])
+@app.route('/api/data', methods=['GET'])
 def get_data():
     if 'user' not in session:
         app.logger.warning("Unauthorized access attempt")
         return jsonify({'message': 'Unauthorized'}), 401
 
-    data = request.get_json()
-    if data.get('data') == 'trigger':
-        app.logger.info('Special input received!')
-        response = {'alert': 'Special input received!'}
-    else:
-        response = {'data': data.get('data')}
+    # Example response, replace with your actual data source
+    response = {
+        'data': 'example data'
+    }
     return jsonify(response)
 
 def extract_numbers_before_mp(text):
@@ -229,7 +227,6 @@ def send_to_validation():
     return jsonify({'status': 'success'})
 
 def markAsNew(data):
-    # Add any logic needed to mark the data as new
     data['status'] = 'new'
     return data
 
@@ -295,7 +292,6 @@ def get_employee_data():
         return jsonify({'message': 'Unauthorized'}), 401
     return jsonify(employee_data)
 
-
 @app.route('/api/validation_data', methods=['GET'])
 def get_validation_data():
     if 'user' not in session or session.get('role') not in ['employee', 'admin']:
@@ -304,7 +300,6 @@ def get_validation_data():
 
     global validation_data
     if not validation_data:
-        # Load validation data from JSON file
         try:
             validation_file_path = os.path.join(os.path.dirname(__file__), 'validation_terenuri.json')
             with open(validation_file_path, 'r') as json_file:
@@ -329,6 +324,11 @@ def get_markdown_description():
 
     markdown_text = markdown_description(description)
     return jsonify({'markdown': markdown_text})
+
+# Fallback route for React Router
+@app.errorhandler(404)
+def not_found(e):
+    return send_from_directory(app.static_folder, 'index.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
