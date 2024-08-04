@@ -9,7 +9,7 @@ import numpy as np
 import re
 from werkzeug.security import generate_password_hash, check_password_hash
 from opencage.geocoder import OpenCageGeocode
-import openai
+from openai import OpenAI
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -46,12 +46,12 @@ if not opencage_api_key:
 
 geocoder = OpenCageGeocode(opencage_api_key)
 
-# Initialize OpenAI API key using the new OpenAI client
+# Initialize OpenAI API key
 openai_api_key = os.getenv("OPENAI_API_KEY")
 if not openai_api_key:
     raise ValueError("No OPENAI_API_KEY set for OpenAI API")
 
-openai.api_key = openai_api_key
+client = OpenAI(api_key=openai_api_key)
 
 @app.before_request
 def log_session_info():
@@ -133,7 +133,7 @@ def markdown_description(description):
             "Informații suplimentare: \n\n"
             f"{description}"
         )
-        response = openai.ChatCompletion.create(
+        response = client.chat.completions.create(
             model="gpt-4",
             messages=[
                 {"role": "user", "content": prompt},
