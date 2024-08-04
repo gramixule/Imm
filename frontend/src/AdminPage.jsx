@@ -221,12 +221,12 @@ const AdminPage = ({ rowData = [] }) => {
       }
     }
   };
-*/}
+
   
   useEffect(() => {
     filteredData.forEach(generateMarkdownIfNeeded);
   }, [filteredData]);
-
+*/}
   const openMaps = () => {
     let address = selectedRow.Description.match(/Adresa postala:\s*([^<]+)/i);
     if (address) {
