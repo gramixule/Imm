@@ -3,6 +3,8 @@ import axios from 'axios';
 import * as XLSX from 'xlsx';
 import './UpdateDataPage.css'; // Import the CSS file
 
+const API_URL = 'https://imm-a8ub.onrender.com'; 
+
 const UpdateDataPage = () => {
   const [file, setFile] = useState(null);
   const [error, setError] = useState('');
@@ -37,7 +39,7 @@ const UpdateDataPage = () => {
     const formData = new FormData();
     formData.append('file', file);
 
-    axios.post('https://your-flask-api-endpoint/api/upload', formData, {
+    axios.post(`${API_URL}/api/upload`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
