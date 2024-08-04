@@ -9,7 +9,7 @@ import numpy as np
 import re
 from werkzeug.security import generate_password_hash, check_password_hash
 from opencage.geocoder import OpenCageGeocode
-from openai import OpenAI
+import openai
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -51,7 +51,7 @@ openai_api_key = os.getenv("OPENAI_API_KEY")
 if not openai_api_key:
     raise ValueError("No OPENAI_API_KEY set for OpenAI API")
 
-client = OpenAI(api_key=openai_api_key)
+openai.api_key = openai_api_key
 
 @app.before_request
 def log_session_info():
@@ -133,7 +133,7 @@ def markdown_description(description):
             "Informații suplimentare: \n\n"
             f"{description}"
         )
-        response = client.chat.completions.create(
+        response = openai.ChatCompletion.create(
             model="gpt-4",
             messages=[
                 {"role": "user", "content": prompt},
@@ -143,7 +143,7 @@ def markdown_description(description):
             stop=None,
             temperature=0.9
         )
-        markdown_text = response.choices[0].message.content.strip()
+        markdown_text = response.choices[0].message['content'].strip()
         return markdown_text
     except Exception as e:
         app.logger.error(f"Error generating markdown: {e}")
@@ -300,6 +300,7 @@ def get_validation_data():
 
     global validation_data
     if not validation_data:
+        # Load validation data from JSON file
         try:
             validation_file_path = os.path.join(os.path.dirname(__file__), 'validation_terenuri.json')
             with open(validation_file_path, 'r') as json_file:
@@ -325,24 +326,19 @@ def get_markdown_description():
     markdown_text = markdown_description(description)
     return jsonify({'markdown': markdown_text})
 
-@app.route('/api/upload', methods=['POST'])
-def upload_file():
-    if 'file' not in request.files:
-        return jsonify({'message': 'No file part'}), 400
-    file = request.files['file']
-    if file.filename == '':
-        return jsonify({'message': 'No selected file'}), 400
-    if file and file.filename.endswith('.xlsx'):
-        file_path = os.path.join('/tmp', file.filename)  #  path to save the file
-        file.save(file_path)
-        try:
-            df = pd.read_excel(file_path)
-            
-            return jsonify({'message': 'File uploaded and processed successfully'}), 200
-        except Exception as e:
-            return jsonify({'message': f'Error processing file: {e}'}), 500
-    else:
-        return jsonify({'message': 'Invalid file type'}), 400
+@app.route('/api/markdown', methods=['POST'])
+def generate_markdown():
+    if 'user' not in session:
+        return jsonify({'message': 'Unauthorized'}), 401
+
+    data = request.get_json()
+    description = data.get('description', '')
+
+    if not description:
+        return jsonify({'message': 'Description is required'}), 400
+
+    markdown_text = markdown_description(description)
+    return jsonify({'markdown': markdown_text})
 
 # Fallback route for React Router
 @app.errorhandler(404)
