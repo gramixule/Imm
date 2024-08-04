@@ -89,7 +89,7 @@ const UpdateDataPage = () => {
   const handleAddAddress = () => {
     const updatedContent = fileContent.map(item => ({
       ...item,
-      address: item.address || '',
+      address: item.address || 'Generated Address', // Placeholder for actual address logic
     }));
     setFileContent(updatedContent);
     setJsonContent(JSON.stringify(updatedContent, null, 2));
