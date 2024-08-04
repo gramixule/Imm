@@ -333,11 +333,11 @@ def upload_file():
     if file.filename == '':
         return jsonify({'message': 'No selected file'}), 400
     if file and file.filename.endswith('.xlsx'):
-        file_path = os.path.join('/path/to/save', file.filename)  # Update the path to save the file
+        file_path = os.path.join('/tmp', file.filename)  #  path to save the file
         file.save(file_path)
         try:
             df = pd.read_excel(file_path)
-            # Process the DataFrame as needed
+            
             return jsonify({'message': 'File uploaded and processed successfully'}), 200
         except Exception as e:
             return jsonify({'message': f'Error processing file: {e}'}), 500
