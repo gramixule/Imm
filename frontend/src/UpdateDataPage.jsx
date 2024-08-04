@@ -65,15 +65,25 @@ const UpdateDataPage = () => {
     });
   };
 
-  const handleAddMarkdown = () => {
-    const updatedContent = fileContent.map(item => ({
-      ...item,
-      markdown_description: item.markdown_description || '',
-    }));
-    setFileContent(updatedContent);
-    setJsonContent(JSON.stringify(updatedContent, null, 2));
-    setError('');
-    setSuccess('Markdown descriptions added.');
+  const handleAddMarkdown = async () => {
+    try {
+      const updatedContent = await Promise.all(
+        fileContent.map(async (item) => {
+          if (item.descriere) {
+            const response = await axios.post(`${API_URL}/api/markdown`, { description: item.descriere });
+            return { ...item, markdown_description: response.data.markdown };
+          }
+          return item;
+        })
+      );
+      setFileContent(updatedContent);
+      setJsonContent(JSON.stringify(updatedContent, null, 2));
+      setError('');
+      setSuccess('Markdown descriptions added.');
+    } catch (error) {
+      console.error('Error generating markdown:', error);
+      setError('There was an error generating markdown descriptions.');
+    }
   };
 
   const handleAddAddress = () => {
