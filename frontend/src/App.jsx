@@ -25,7 +25,7 @@ const App = () => {
   };
 
   const fetchData = () => {
-    axios.get(`${API_URL}/api/convert`, { withCredentials: true })
+    axios.get(`${API_URL}/api/data`, { withCredentials: true }) // Corrected the endpoint
       .then(response => {
         console.log("Data fetched:", response.data);
         if (Array.isArray(response.data)) {
@@ -39,6 +39,17 @@ const App = () => {
         console.error('There was an error fetching the data!', error);
         setError('There was an error fetching the data!');
       });
+  };
+
+  const handleLogout = () => {
+    axios.post(`${API_URL}/api/logout`, {}, { withCredentials: true })
+      .then(() => {
+        setRole(null);
+        setRowData([]);
+        console.log("Logged out");
+        navigate("/"); // Navigate to home after logout
+      })
+      .catch(err => console.error('Logout error:', err));
   };
 
   return (
@@ -57,16 +68,7 @@ const App = () => {
           {role && (
             <button
               className="button"
-              onClick={() => {
-                axios.post(`${API_URL}/api/logout`, {}, { withCredentials: true })
-                  .then(() => {
-                    setRole(null);
-                    setRowData([]);
-                    console.log("Logged out");
-                    navigate("/"); // Navigate to home after logout
-                  })
-                  .catch(err => console.error('Logout error:', err));
-              }}
+              onClick={handleLogout}
             >
               Sign Out
             </button>
