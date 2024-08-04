@@ -38,7 +38,7 @@ const App = () => {
       })
       .catch(error => {
         console.error('There was an error fetching the data!', error);
-        setError('There was an error fetching the data!');
+        setError('Este asta eroare?!');
       });
   };
 
