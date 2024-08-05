@@ -134,7 +134,7 @@ const DetailsPage = () => {
             </button>
             <div>
               {showMarkdown ? (
-                <ReactMarkdown>{rowData.markdown_description || rowData.Description}</ReactMarkdown>
+                <ReactMarkdown>{rowData.Description}</ReactMarkdown>
               ) : (
                 <p>{rowData.Description}</p>
               )}
