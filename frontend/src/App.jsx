@@ -63,7 +63,8 @@ const App = () => {
               <Link to="/validation" className="button">Validation</Link>
               <Link to="/mapping" className="button">Mapping</Link>
               <Link to="/update-data" className="button">Update Data</Link>
-              <Link to="/employee" className="button">Employee</Link> {/* Add navigation to Employee Page */}
+              <Link to="/employee" className="button">Employee</Link>
+              <Link to="/admin" className="button">Admin</Link> {/* Add Admin Page button */}
             </>
           )}
         </div>
@@ -84,6 +85,7 @@ const App = () => {
         <Route path="/details" element={<DetailsPage />} /> {/* Add the DetailsPage route */}
         <Route path="/update-data" element={<UpdateDataPage />} />
         <Route path="/employee" element={<EmployeePage />} /> {/* Add EmployeePage Route */}
+        <Route path="/admin" element={<AdminPage rowData={rowData} />} /> {/* Add AdminPage Route */}
         <Route path="/" element={
           role ? (
             role === "admin" ? (
