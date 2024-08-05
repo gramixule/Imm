@@ -20,20 +20,22 @@ const MappingPage = () => {
     const fetchZones = async () => {
       try {
         const response = await axios.get(`${API_URL}/zone_mapping`);
-        setZones(response.data);
+        setZones(Array.isArray(response.data) ? response.data : []);
         console.log('Zones:', response.data); // Log fetched zones
       } catch (error) {
         console.error('Error fetching zones:', error);
+        setZones([]);
       }
     };
 
     const fetchValidationData = async () => {
       try {
         const response = await axios.get(`${API_URL}/api/validation_data`, { withCredentials: true });
-        setValidationData(response.data);
+        setValidationData(Array.isArray(response.data) ? response.data : []);
         console.log('Validation Data:', response.data); // Log fetched validation data
       } catch (error) {
         console.error('Error fetching validation data:', error);
+        setValidationData([]);
       }
     };
 
@@ -60,7 +62,7 @@ const MappingPage = () => {
 
       axios.post(`${API_URL}/api/extract_zones_from_pdf`, formData, { withCredentials: true })
         .then(response => {
-          setPdfZones(response.data.zones);
+          setPdfZones(Array.isArray(response.data.zones) ? response.data.zones : []);
           console.log('PDF Zones:', response.data.zones); // Log zones extracted from PDF
         })
         .catch(error => {
