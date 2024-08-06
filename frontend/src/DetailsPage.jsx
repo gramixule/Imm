@@ -144,9 +144,19 @@ const DetailsPage = () => {
           <p><strong>Street Number:</strong> {rowData.streetNumber}</p>
           <p><strong>Additional Details:</strong> {rowData.additionalDetails}</p>
         </div>
-        <div className="section images">
-          <h3>IMAGES AN UNT</h3>
-          {/* Content for Images AN UNT */}
+        <div className="section calculations">
+          <h3>CALCULATION RESULTS</h3>
+          <p><strong>Total Land:</strong> {metrics.totalLand} mp</p>
+          <p><strong>Land Occupation (POT):</strong> {metrics.landOccupation} mp</p>
+          <p><strong>Usage Coefficient (CUT):</strong> {metrics.usageCoefficient} mp</p>
+          <p><strong>Unoccupied Land:</strong> {metrics.unoccupiedLand} mp</p>
+          <p><strong>Price per Square Meter:</strong> {metrics.pricePerSquareMeter} euro/mp</p>
+          <p><strong>Construction Cost per Square Meter:</strong> {metrics.constructionCostPerSquareMeter} euro/mp</p>
+          <p><strong>Total Construction Cost:</strong> {metrics.totalConstructionCost} euro</p>
+          <p><strong>Total Investment Cost:</strong> {metrics.totalInvestmentCost} euro</p>
+          <p><strong>Selling Price per Square Meter:</strong> {metrics.sellingPricePerSquareMeter} euro/mp</p>
+          <p><strong>Market Selling Price per Square Meter:</strong> {metrics.marketSellingPricePerSquareMeter} euro/mp</p>
+          <p><strong>Profit Difference:</strong> {metrics.profitDifference} euro/mp</p>
         </div>
         <div className="section chat-log">
           <h3>CHAT LOG COM</h3>
@@ -172,18 +182,6 @@ const DetailsPage = () => {
               <input type="number" name="price" value={price} onChange={(e) => setPrice(parseFloat(e.target.value))} />
             </label>
           </form>
-          <h3>Calculation Results</h3>
-          <p><strong>Total Land:</strong> {metrics.totalLand} mp</p>
-          <p><strong>Land Occupation (POT):</strong> {metrics.landOccupation} mp</p>
-          <p><strong>Usage Coefficient (CUT):</strong> {metrics.usageCoefficient} mp</p>
-          <p><strong>Unoccupied Land:</strong> {metrics.unoccupiedLand} mp</p>
-          <p><strong>Price per Square Meter:</strong> {metrics.pricePerSquareMeter} euro/mp</p>
-          <p><strong>Construction Cost per Square Meter:</strong> {metrics.constructionCostPerSquareMeter} euro/mp</p>
-          <p><strong>Total Construction Cost:</strong> {metrics.totalConstructionCost} euro</p>
-          <p><strong>Total Investment Cost:</strong> {metrics.totalInvestmentCost} euro</p>
-          <p><strong>Selling Price per Square Meter:</strong> {metrics.sellingPricePerSquareMeter} euro/mp</p>
-          <p><strong>Market Selling Price per Square Meter:</strong> {metrics.marketSellingPricePerSquareMeter} euro/mp</p>
-          <p><strong>Profit Difference:</strong> {metrics.profitDifference} euro/mp</p>
         </div>
         <div className="section input-text">
           <h3>INPUT TEXT</h3>
