@@ -145,7 +145,7 @@ const DetailsPage = () => {
           <p><strong>Additional Details:</strong> {rowData.additionalDetails}</p>
         </div>
         <div className="section calculator-and-results">
-          <h3>CALCULATOR INV</h3>
+          <h3>CALCULATOR INV & RESULTS</h3>
           <form>
             <label>
               <span>CUT</span>
@@ -164,18 +164,20 @@ const DetailsPage = () => {
               <input type="number" name="price" value={price} onChange={(e) => setPrice(parseFloat(e.target.value))} />
             </label>
           </form>
-          <h3>CALCULATION RESULTS</h3>
-          <p><strong>Total Land:</strong> {metrics.totalLand} mp</p>
-          <p><strong>Land Occupation (POT):</strong> {metrics.landOccupation} mp</p>
-          <p><strong>Usage Coefficient (CUT):</strong> {metrics.usageCoefficient} mp</p>
-          <p><strong>Unoccupied Land:</strong> {metrics.unoccupiedLand} mp</p>
-          <p><strong>Price per Square Meter:</strong> {metrics.pricePerSquareMeter} euro/mp</p>
-          <p><strong>Construction Cost per Square Meter:</strong> {metrics.constructionCostPerSquareMeter} euro/mp</p>
-          <p><strong>Total Construction Cost:</strong> {metrics.totalConstructionCost} euro</p>
-          <p><strong>Total Investment Cost:</strong> {metrics.totalInvestmentCost} euro</p>
-          <p><strong>Selling Price per Square Meter:</strong> {metrics.sellingPricePerSquareMeter} euro/mp</p>
-          <p><strong>Market Selling Price per Square Meter:</strong> {metrics.marketSellingPricePerSquareMeter} euro/mp</p>
-          <p><strong>Profit Difference:</strong> {metrics.profitDifference} euro/mp</p>
+          <div className="results">
+            <h3>CALCULATION RESULTS</h3>
+            <p><strong>Total Land:</strong> {metrics.totalLand} mp</p>
+            <p><strong>Land Occupation (POT):</strong> {metrics.landOccupation} mp</p>
+            <p><strong>Usage Coefficient (CUT):</strong> {metrics.usageCoefficient} mp</p>
+            <p><strong>Unoccupied Land:</strong> {metrics.unoccupiedLand} mp</p>
+            <p><strong>Price per Square Meter:</strong> {metrics.pricePerSquareMeter} euro/mp</p>
+            <p><strong>Construction Cost per Square Meter:</strong> {metrics.constructionCostPerSquareMeter} euro/mp</p>
+            <p><strong>Total Construction Cost:</strong> {metrics.totalConstructionCost} euro</p>
+            <p><strong>Total Investment Cost:</strong> {metrics.totalInvestmentCost} euro</p>
+            <p><strong>Selling Price per Square Meter:</strong> {metrics.sellingPricePerSquareMeter} euro/mp</p>
+            <p><strong>Market Selling Price per Square Meter:</strong> {metrics.marketSellingPricePerSquareMeter} euro/mp</p>
+            <p><strong>Profit Difference:</strong> {metrics.profitDifference} euro/mp</p>
+          </div>
         </div>
         <div className="section chat-log">
           <h3>CHAT LOG COM</h3>
